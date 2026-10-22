@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BridgeBox</title>
+<meta name="description" content="A small board that runs a stock Bambu AMS on your Klipper printer through the AFC Add-On. Nothing on the AMS is opened or modified.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+  :root{
+    --paper:#eaeef0;
+    --surface:#ffffff;
+    --sunken:#e0e6e9;
+    --ink:#131a20;
+    --muted:#57646e;
+    --rule:#c9d2d8;
+    --rule-soft:#dde4e8;
+    --signal:#0f6f9e;
+    --signal-soft:#e2eef4;
+    --deep:#0e1418;
+    --deep-ink:#e8eef1;
+    --deep-muted:#8fa2ae;
+    --deep-rule:#26333b;
+    --bay-1:#1f8ecd;
+    --bay-2:#4aa73c;
+    --bay-3:#e0a406;
+    --bay-4:#d8322c;
+    --measure:34rem;
+    --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+    --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#0e1418;
+      --surface:#161f25;
+      --sunken:#121a20;
+      --ink:#e8eef1;
+      --muted:#93a2ac;
+      --rule:#26333b;
+      --rule-soft:#1e2930;
+      --signal:#54b3e2;
+      --signal-soft:#12303f;
+      --deep:#080d10;
+      --deep-ink:#e8eef1;
+      --deep-muted:#8fa2ae;
+      --deep-rule:#1d272e;
+      --bay-1:#4fb0e0;
+      --bay-2:#6cc45c;
+      --bay-3:#f0bc3a;
+      --bay-4:#ea5a54;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0e1418;
+    --surface:#161f25;
+    --sunken:#121a20;
+    --ink:#e8eef1;
+    --muted:#93a2ac;
+    --rule:#26333b;
+    --rule-soft:#1e2930;
+    --signal:#54b3e2;
+    --signal-soft:#12303f;
+    --deep:#080d10;
+    --deep-ink:#e8eef1;
+    --deep-muted:#8fa2ae;
+    --deep-rule:#1d272e;
+    --bay-1:#4fb0e0;
+    --bay-2:#6cc45c;
+    --bay-3:#f0bc3a;
+    --bay-4:#ea5a54;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:17px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.eyebrow,.stat-n{font-family:var(--display);text-wrap:balance}
+  h2{font-size:clamp(1.45rem,3.2vw,1.9rem);font-weight:800;letter-spacing:-.021em;line-height:1.12;margin:0}
+  h3{font-size:1.02rem;font-weight:700;letter-spacing:-.008em;line-height:1.25;margin:0}
+  p{margin:0}
+  a{color:var(--signal)}
+  :focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:2px}
+
+  .eyebrow{
+    font-family:var(--mono);font-size:.7rem;font-weight:500;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--muted);
+    margin:0;
+  }
+
+  .wrap{max-width:73rem;margin:0 auto;padding:0 clamp(1.15rem,4vw,3rem)}
+  .prose{max-width:var(--measure);display:flex;flex-direction:column;gap:1rem}
+  .lede{font-size:1.16rem;line-height:1.55}
+
+  /* ── hero ─────────────────────────────────────────── */
+  .hero{background:var(--deep);color:var(--deep-ink);border-bottom:1px solid var(--deep-rule)}
+  .hero-in{
+    display:flex;flex-direction:column;gap:clamp(1.6rem,4vw,2.5rem);
+    /* padding-block, not the shorthand: .wrap sets the horizontal inset and a
+       shorthand here would zero it, putting the headline against the edge. */
+    padding-block:clamp(2.5rem,6vw,4.25rem) clamp(2.2rem,5vw,3.25rem);
+  }
+  .logo{width:min(430px,78%);height:auto;display:block;margin-inline:auto}
+  .hero h1{
+    font-size:clamp(1.85rem,5.1vw,3.15rem);font-weight:800;
+    letter-spacing:-.031em;line-height:1.04;margin:0;max-width:19ch;
+  }
+  .hero-sub{color:var(--deep-muted);max-width:46ch;font-size:1.08rem;line-height:1.56}
+  .hero-grid{display:grid;gap:clamp(1.6rem,4vw,3rem);grid-template-columns:1fr}
+  @media (min-width:900px){.hero-grid{grid-template-columns:1fr 1.05fr;align-items:end}}
+
+  /* Case render and board photo, widths in proportion to their aspect
+     ratios so the two stand the same height. */
+  code{font-family:var(--mono);font-size:.9em}
+
+  .hero-shots{
+    margin:0;display:grid;grid-template-columns:1.85fr 1fr;align-items:end;
+    gap:clamp(.8rem,2.4vw,1.5rem);width:100%;max-width:560px;justify-self:center;
+  }
+  .hero-shots figure{margin:0;min-width:0}
+  .hero-shots img{
+    width:100%;height:auto;display:block;
+    filter:drop-shadow(0 18px 34px rgba(0,0,0,.55));
+  }
+
+  .badges{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.2rem}
+  .badge{
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.03em;
+    padding:.28rem .6rem;border:1px solid var(--deep-rule);border-radius:2px;
+    color:var(--deep-muted);
+  }
+  .badge.live{color:var(--deep-ink);border-color:var(--signal)}
+  .badge.new{color:var(--deep-ink);border-color:var(--bay-3)}
+  .badge.new::before{
+    content:"";display:inline-block;width:6px;height:6px;border-radius:1px;
+    background:var(--bay-3);margin-right:.45rem;vertical-align:1px;
+  }
+  .badge.live::before{
+    content:"";display:inline-block;width:6px;height:6px;border-radius:50%;
+    background:var(--signal);margin-right:.45rem;vertical-align:1px;
+  }
+
+  /* ── sections ─────────────────────────────────────── */
+  section{padding:clamp(2.6rem,6vw,4.2rem) 0}
+  section + section{border-top:1px solid var(--rule-soft)}
+  .band{background:var(--sunken);border-top:1px solid var(--rule-soft);border-bottom:1px solid var(--rule-soft)}
+  .head{display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.6rem;max-width:var(--measure)}
+
+  /* ── figure ───────────────────────────────────────── */
+  figure{margin:0;display:flex;flex-direction:column;gap:.9rem}
+  .fig-scroll{overflow-x:auto;padding-bottom:.3rem}
+  figure svg{display:block;width:100%;min-width:640px;height:auto;color:var(--ink)}
+  figcaption{font-size:.94rem;color:var(--muted);max-width:52ch;line-height:1.55}
+
+  /* ── capability row ───────────────────────────────── */
+  .caps{display:grid;gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft);grid-template-columns:1fr}
+  @media (min-width:620px){.caps{grid-template-columns:1fr 1fr}}
+  @media (min-width:980px){.caps{grid-template-columns:repeat(3,1fr)}}
+  .cap{background:var(--surface);padding:1.35rem 1.4rem;display:flex;flex-direction:column;gap:.5rem}
+  .cap-k{
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--muted);display:flex;align-items:center;gap:.5rem;
+  }
+  .chip{width:9px;height:9px;border-radius:1px;flex:none}
+  .cap p{font-size:.97rem;line-height:1.55;color:var(--muted)}
+
+  /* ── spec table ───────────────────────────────────── */
+  .spec-scroll{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;min-width:31rem;font-family:var(--mono);font-size:.83rem}
+  th,td{text-align:left;padding:.62rem .9rem;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+  th{
+    width:15rem;font-weight:400;color:var(--muted);
+    letter-spacing:.02em;white-space:nowrap;
+  }
+  td{color:var(--ink);font-variant-numeric:tabular-nums}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+
+  /* ── needs / limits list ──────────────────────────── */
+  .needs{display:grid;gap:1.5rem 2.5rem;grid-template-columns:1fr;max-width:60rem}
+  @media (min-width:760px){.needs{grid-template-columns:1fr 1fr}}
+  .need{display:flex;flex-direction:column;gap:.4rem;padding-left:1rem;border-left:2px solid var(--rule)}
+  .need.warn{border-left-color:var(--bay-3)}
+  .need p{font-size:.97rem;color:var(--muted);line-height:1.55}
+
+  /* ── AMS Lite ─────────────────────────────────────── */
+  .lite-grid{display:grid;gap:clamp(1.6rem,4vw,3rem);grid-template-columns:1fr;align-items:start;margin-bottom:2.4rem}
+  @media (min-width:940px){.lite-grid{grid-template-columns:minmax(0,1fr) minmax(0,.9fr)}}
+  .lite-grid .prose{gap:.9rem}
+  .facts{
+    margin:0;display:grid;grid-template-columns:minmax(0,10.5rem) minmax(0,1fr);
+    font-family:var(--mono);font-size:.83rem;line-height:1.5;
+    border-top:1px solid var(--rule);
+  }
+  .facts dt,.facts dd{margin:0;padding:.58rem .2rem;border-bottom:1px solid var(--rule-soft)}
+  .facts dt{color:var(--muted);letter-spacing:.02em}
+  .facts dd{color:var(--ink);font-variant-numeric:tabular-nums}
+  .facts .req{color:var(--ink);font-weight:500}
+  .facts .req::before{
+    content:"";display:inline-block;width:7px;height:7px;border-radius:1px;
+    background:var(--bay-3);margin-right:.5rem;vertical-align:1px;
+  }
+  @media (max-width:520px){
+    .facts{grid-template-columns:1fr}
+    .facts dt{border-bottom:0;padding-bottom:0}
+  }
+
+  /* ── panel aside ──────────────────────────────────── */
+  .panel-wrap{display:grid;gap:clamp(1.6rem,4vw,3rem);grid-template-columns:1fr;align-items:start}
+  @media (min-width:900px){.panel-wrap{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}}
+  .panel-wrap .prose{gap:.85rem}
+  .panel-wrap svg{width:100%;height:auto;min-width:0;display:block}
+
+  footer{background:var(--deep);color:var(--deep-muted);padding:2.6rem 0;font-size:.92rem}
+  footer .wrap{display:flex;flex-direction:column;gap:.75rem}
+  footer strong{color:var(--deep-ink);font-family:var(--display);font-weight:700;letter-spacing:-.01em}
+  .note{
+    font-family:var(--mono);font-size:.75rem;line-height:1.65;color:var(--deep-muted);
+    border:1px dashed var(--deep-rule);padding:.75rem .9rem;max-width:60ch;
+  }
+</style>
+<style>
+  /* Base reset the page was written against. */
+  :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+  body{margin:0}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap hero-in">
+    <img class="logo" alt="BridgeBox" src="assets/logo.webp">
+    <div class="hero-grid">
+      <div style="display:flex;flex-direction:column;gap:1.1rem">
+        <h1>Your Bambu AMS, running on your Klipper printer.</h1>
+        <p class="hero-sub">A small board that takes the Bambu printer's place on the AMS's own wiring. The AMS keeps its stock firmware, never gets opened, and behaves exactly as it always has — it just answers to Klipper now.</p>
+        <div class="badges">
+          <span class="badge live">Running on hardware</span>
+          <span class="badge">AMS 1</span>
+          <span class="badge">AMS 2 Pro</span>
+          <span class="badge">AMS HT</span>
+          <span class="badge new">AMS Lite, in testing</span>
+        </div>
+      </div>
+      <div class="hero-shots">
+        <figure>
+          <img alt="BridgeBox in its closed printed case, the BridgeBox logo in color on the lid, the AMS connector at the front and the power jack on the side" src="assets/case.webp">
+        </figure>
+        <figure>
+          <img alt="A BridgeBox board from the first batch: the wireless module at the top right, USB-C on the left edge, the power jack at the bottom left and the AMS connector at the bottom right" src="assets/board.webp">
+        </figure>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">The problem</p>
+        <h2>An AMS only talks to a Bambu printer.</h2>
+      </div>
+      <div class="prose">
+        <p class="lede">Bambu's filament changer is good hardware — four bays, tag reading, a spool dryer, a buffer that manages slack. But it speaks a private language over its own cable, and it waits for a Bambu machine to lead the conversation. Plug it into anything else and it sits there doing nothing.</p>
+        <p>So if you run Klipper and the AFC Add-On — on a Voron, a Trident, something you built yourself, or a commercial machine that supports it like the Snapmaker U1 — an AMS on the shelf is a box you can't use. The usual answer is to replace its brain with aftermarket boards and custom firmware. That works, and it also means taking a working machine apart.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">What BridgeBox does</p>
+        <h2>It stands where the printer would stand.</h2>
+      </div>
+      <div class="prose" style="margin-bottom:2.2rem">
+        <p>BridgeBox is the other half of that conversation. It plugs into the four-pin socket on the filament buffer — the one a Bambu printer normally occupies — and speaks the AMS's language back to it, on time, at full speed. From the AMS's side nothing has changed. It is still talking to a printer. That printer is now yours.</p>
+        <p><strong>And none of it is one-way.</strong> No board is replaced, no firmware is flashed, no case is opened — so the day you want the AMS back on a Bambu machine, you unplug BridgeBox and plug the printer in. It will not know it was ever gone.</p>
+      </div>
+      <figure>
+        <div class="fig-scroll">
+          <svg viewBox="0 0 880 506" role="img" aria-label="Three wiring paths compared. With a Bambu printer, the printer drives the RS-485 bus to the filament buffer and on to the AMS. With BridgeBox, a Klipper host connects over USB or WiFi to BridgeBox, which drives the same RS-485 bus to the same unmodified buffer and AMS. An AMS Lite has no buffer, so BridgeBox is wired straight to it, in the place of the A1's cable.">
+            <defs>
+              <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 z" fill="currentColor"></path>
+              </marker>
+              <marker id="ahs" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 z" fill="var(--signal)"></path>
+              </marker>
+            </defs>
+
+            <!-- row A : stock -->
+            <text x="0" y="18" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1.4" fill="var(--muted)">STOCK — THE PRINTER IS THE BUS MASTER</text>
+            <rect x="0" y="34" width="176" height="62" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+            <text x="88" y="63" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="700" fill="currentColor">Bambu printer</text>
+            <text x="88" y="80" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">bus master</text>
+
+            <line x1="176" y1="65" x2="392" y2="65" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)"></line>
+            <text x="284" y="56" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">RS-485 · 4-pin</text>
+
+            <rect x="400" y="34" width="104" height="62" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+            <text x="452" y="63" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="700" fill="currentColor">Buffer</text>
+            <text x="452" y="80" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">stock</text>
+
+            <line x1="504" y1="65" x2="592" y2="65" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)"></line>
+            <text x="548" y="56" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">6-pin</text>
+
+            <rect x="600" y="34" width="240" height="62" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+            <text x="643" y="63" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="700" fill="currentColor">AMS</text>
+            <text x="643" y="80" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">stock</text>
+            <rect x="694" y="50" width="24" height="30" rx="2" fill="var(--bay-1)"></rect>
+            <rect x="724" y="50" width="24" height="30" rx="2" fill="var(--bay-2)"></rect>
+            <rect x="754" y="50" width="24" height="30" rx="2" fill="var(--bay-3)"></rect>
+            <rect x="784" y="50" width="24" height="30" rx="2" fill="var(--bay-4)"></rect>
+
+            <!-- divider -->
+            <line x1="0" y1="146" x2="880" y2="146" stroke="var(--rule)" stroke-width="1"></line>
+
+            <!-- row B : bridgebox -->
+            <text x="0" y="186" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1.4" fill="var(--signal)">WITH BRIDGEBOX — SAME BUS, DIFFERENT MASTER</text>
+            <rect x="0" y="202" width="120" height="62" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+            <text x="60" y="231" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="700" fill="currentColor">Klipper host</text>
+            <text x="60" y="248" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">your printer</text>
+
+            <line x1="120" y1="233" x2="168" y2="233" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)"></line>
+            <text x="144" y="224" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">USB</text>
+            <text x="144" y="251" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">WiFi</text>
+
+            <rect x="176" y="202" width="150" height="62" rx="4" fill="var(--signal-soft)" stroke="var(--signal)" stroke-width="2"></rect>
+            <text x="251" y="231" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="800" fill="var(--signal)">BridgeBox</text>
+            <text x="251" y="248" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--signal)">bus master</text>
+
+            <line x1="326" y1="233" x2="392" y2="233" stroke="var(--signal)" stroke-width="1.5" marker-end="url(#ahs)"></line>
+            <text x="359" y="224" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--signal)">RS-485</text>
+
+            <rect x="400" y="202" width="104" height="62" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+            <text x="452" y="231" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="700" fill="currentColor">Buffer</text>
+            <text x="452" y="248" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">unchanged</text>
+
+            <line x1="504" y1="233" x2="592" y2="233" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)"></line>
+            <text x="548" y="224" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">6-pin</text>
+
+            <rect x="600" y="202" width="240" height="62" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+            <text x="643" y="231" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="700" fill="currentColor">AMS</text>
+            <text x="643" y="248" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">unchanged</text>
+            <rect x="694" y="218" width="24" height="30" rx="2" fill="var(--bay-1)"></rect>
+            <rect x="724" y="218" width="24" height="30" rx="2" fill="var(--bay-2)"></rect>
+            <rect x="754" y="218" width="24" height="30" rx="2" fill="var(--bay-3)"></rect>
+            <rect x="784" y="218" width="24" height="30" rx="2" fill="var(--bay-4)"></rect>
+
+            <path d="M400 288 L400 296 L840 296 L840 288" fill="none" stroke="var(--rule)" stroke-width="1"></path>
+            <text x="620" y="318" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">identical in both rows: stock firmware, never opened</text>
+
+            <!-- divider -->
+            <line x1="0" y1="346" x2="880" y2="346" stroke="var(--rule)" stroke-width="1"></line>
+
+            <!-- row C : AMS Lite, no buffer -->
+            <text x="0" y="386" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1.4" fill="var(--signal)">AMS LITE: BRIDGEBOX WIRED STRAIGHT TO IT</text>
+            <rect x="0" y="402" width="120" height="62" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+            <text x="60" y="431" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="700" fill="currentColor">Klipper host</text>
+            <text x="60" y="448" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">your printer</text>
+
+            <line x1="120" y1="433" x2="168" y2="433" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)"></line>
+            <text x="144" y="424" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">USB</text>
+            <text x="144" y="451" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">WiFi</text>
+
+            <rect x="176" y="402" width="150" height="62" rx="4" fill="var(--signal-soft)" stroke="var(--signal)" stroke-width="2"></rect>
+            <text x="251" y="431" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="800" fill="var(--signal)">BridgeBox</text>
+            <text x="251" y="448" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--signal)">bus master</text>
+
+            <line x1="326" y1="433" x2="592" y2="433" stroke="var(--signal)" stroke-width="1.5" marker-end="url(#ahs)"></line>
+            <text x="359" y="424" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--signal)">RS-485</text>
+
+            <rect x="400" y="410" width="104" height="46" rx="4" fill="var(--sunken)" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 4"></rect>
+            <text x="452" y="437" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">no buffer</text>
+
+            <rect x="600" y="402" width="240" height="62" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+            <text x="643" y="431" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="700" fill="currentColor">AMS Lite</text>
+            <text x="643" y="448" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">unchanged</text>
+            <circle cx="706" cy="433" r="12" fill="var(--bay-1)"></circle>
+            <circle cx="736" cy="433" r="12" fill="var(--bay-2)"></circle>
+            <circle cx="766" cy="433" r="12" fill="var(--bay-3)"></circle>
+            <circle cx="796" cy="433" r="12" fill="var(--bay-4)"></circle>
+            <circle cx="706" cy="433" r="3.5" fill="var(--sunken)"></circle>
+            <circle cx="736" cy="433" r="3.5" fill="var(--sunken)"></circle>
+            <circle cx="766" cy="433" r="3.5" fill="var(--sunken)"></circle>
+            <circle cx="796" cy="433" r="3.5" fill="var(--sunken)"></circle>
+
+            <text x="840" y="494" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">on the AMS Lite's own cable, in the A1's place</text>
+          </svg>
+        </div>
+        <figcaption>The only thing that changes is who leads the conversation. The buffer, the six-pin cable and the AMS itself are untouched, running the firmware they shipped with. An AMS Lite has no buffer, so BridgeBox plugs straight into it.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">What you get</p>
+        <h2>Everything the AMS already knew how to do.</h2>
+      </div>
+      <div class="caps">
+        <div class="cap">
+          <p class="cap-k"><span class="chip" style="background:var(--bay-1)"></span>Filament changes</p>
+          <h3>Your slicer just changes tools</h3>
+          <p>Multi-color and multi-material prints work the way they do on a Bambu machine. Load, unload, the buffer holding tension — all of it driven from Klipper.</p>
+        </div>
+        <div class="cap">
+          <p class="cap-k"><span class="chip" style="background:var(--bay-2)"></span>Spool tags</p>
+          <h3>It reads the RFID tag</h3>
+          <p>Put a tagged spool in a bay and the material, color and temperatures arrive by themselves. No typing in what you just loaded.</p>
+          <p>With Spoolman 0.27 or newer, each tag is linked to its spool, so the spool is found again in whichever bay it goes into. For a tag Spoolman doesn't know yet, open its Add tag dialog and put the spool in a bay: the scan fills it in. Or turn on <code>auto_spoolman_create</code> and AFC makes a new spool from the tag.</p>
+        </div>
+        <div class="cap">
+          <p class="cap-k"><span class="chip" style="background:var(--bay-3)"></span>Remaining filament</p>
+          <h3>It measures what's left</h3>
+          <p>The AMS turns the spool and measures it, by default as soon as a tagged spool goes into a bay. It is a real figure, not a running total that drifts, and it lands in Spoolman and on the spool cards in your web interface.</p>
+          <p>It works it out from the reel itself. The AMS turns the spool and counts filament off the encoder until the RFID tag comes back round past the reader — one revolution tells it how much is still wound on, and that becomes the percentage.</p>
+          <p>So measuring needs a genuine Bambu tag. An untagged or third-party spool loads and prints exactly the same; it just doesn't get measured, and its lane keeps whatever weight you or Spoolman set. The same goes for every spool on an AMS Lite, which has no way to measure one.</p>
+        </div>
+        <div class="cap">
+          <p class="cap-k"><span class="chip" style="background:var(--bay-4)"></span>Drying</p>
+          <h3>Dry a spool where it sits</h3>
+          <p>On the units with heaters, start and stop a drying cycle from the printer's interface and watch the chamber temperature and humidity while it runs.</p>
+          <p>Turn on rotation and the AMS also turns the spools as it dries — a bay at a time, every few minutes — so a coil dries through rather than on one side. It will only turn a bay whose filament is out of the feeder, so unload those and leave the spools free to spin.</p>
+        </div>
+        <div class="cap">
+          <p class="cap-k"><span class="chip" style="background:var(--muted)"></span>When it goes wrong</p>
+          <h3>It notices, and it retries</h3>
+          <p>A jam or a failed feed is caught, named in plain words, and retried. If it still can't recover it stops the print rather than carrying on with no filament.</p>
+          <p>Knock the cable out mid-print and it pauses within seconds — before the extruder can grind away at an AMS nobody is driving. A load already running rides out a brief blip and finishes.</p>
+          <p>When a spool runs out mid-print, the empty bay is caught within two seconds. The print pauses, or carries on from a runout lane on another extruder, and the AMS keeps pushing the leftover through so it can be pulled out.</p>
+        </div>
+        <div class="cap">
+          <p class="cap-k"><span class="chip" style="background:var(--muted)"></span>More than one unit</p>
+          <h3>Four boxed units and eight HTs</h3>
+          <p>Chain up to four AMS 1 or AMS 2 Pro alongside eight HTs, mixed however you like — twenty-four bays on one bridge. That ceiling is Bambu's own, not ours: it is the room their bus leaves for addresses. The units claim theirs at power-up, exactly as they would behind a Bambu printer.</p>
+          <p>Need more? Add a second BridgeBox. Each one runs its own chain, AFC names its units so they never clash, and its tool numbers carry on from the first.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="ams-lite">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">New · AMS Lite</p>
+        <h2>The A1's AMS Lite, on a BridgeBox of its own.</h2>
+      </div>
+      <div class="lite-grid">
+        <div class="prose">
+          <p class="lede">The AMS Lite is the open four-spool changer Bambu sells for the A1 and A1 mini. It has no enclosure, no buffer and no heater, so BridgeBox runs it a little differently from the other units.</p>
+          <p><strong>It has its BridgeBox to itself.</strong> BridgeBox goes on the AMS Lite's cable in the A1's place. Nothing else can share that bus, and AFC refuses a setup that tries, so boxed units and HTs go on a second BridgeBox on the same printer.</p>
+          <p><strong>A toolhead sensor is optional.</strong> A boxed AMS feels the filament arrive at its buffer. An AMS Lite has nothing like that, so it feeds until the filament reaches the toolhead, then lets go and the extruder pulls, the same way an A1 runs it. Its four tubes meet at a splitter at the toolhead. A filament switch after the splitter, before the extruder gears, ends every load for all four trays, and on a Snapmaker U1 the U1's own sensor counts. Without one, the AMS Lite's own odometer ends the load: when the tip reaches the extruder gears it stops moving, and the feed stops there.</p>
+          <p><strong>It learns its own path.</strong> On the first load it measures the run from the AMS Lite to the sensor, or to the gears, with its odometer and keeps that figure. After that, a load that feeds 250&nbsp;mm past it without arriving is stopped, instead of pushing filament somewhere it shouldn't go. A feed that stops well short of it isn't taken as arrived. BridgeBox waits for the AMS Lite's own stall report and only then fails the load as a jam, so a brief hesitation never stops a print.</p>
+          <p><strong>The odometer keeps watch.</strong> The AMS Lite counts the filament leaving each tray in 1.5&nbsp;mm steps, even with its motor off. Once a load ends, the extruder takes over, and the count has to move with it. That proves the gears have hold of the filament; if the count stands still, the load fails instead of printing into the air. While printing, an extruder that keeps pushing while the count stands still means a clog, and AFC pauses the print. The AMS Lite reports a stuck or tangled spool itself, and BridgeBox stops the load and names the tray.</p>
+          <p><strong>Tags work as on the other units.</strong> When a spool goes in, BridgeBox asks the AMS Lite to read its tag, the way an A1 does. A Bambu tag brings the material, color, temperatures and spool weight, along with the tag's own UID and the reel's UUID, so Spoolman links the spool and finds it again in any tray. An untagged spool loads and prints the same; you set the lane.</p>
+          <p><strong>It doesn't measure what's left.</strong> A boxed AMS can turn a tagged spool to measure it. The AMS Lite can't, and it doesn't on an A1 either, so its lanes keep the weight Spoolman or you set.</p>
+          <p><strong>Unloads stop short.</strong> Its spring-loaded holders take back only a little filament, so it never reels the tube home. With a sensor, it pulls back until the sensor clears, then 30&nbsp;mm more (set that to clear your splitter). Without one, it pulls back a set distance, counted on the odometer. Either way it parks there, out of the other trays' way and ready for its next load. To take a spool out, eject the lane: the AMS Lite lets go and you pull the filament out by hand.</p>
+          <p><strong>Where it stands.</strong> On a test printer it comes online, reads its tags, UIDs included, and shows a lane as loaded only while its tray holds a spool. Running without a sensor and the odometer checks for the path, jams, grip and clogs are built. Loads and unloads through AFC are being tested now, and AFC's installer doesn't set one up yet.</p>
+        </div>
+        <dl class="facts" aria-label="AMS Lite at a glance">
+          <dt>Trays</dt><dd>4, on spring-loaded holders</dd>
+          <dt>Bus</dt><dd class="req">Required: alone on its BridgeBox</dd>
+          <dt>Toolhead sensor</dt><dd>Optional: one after the splitter serves all four trays (on a U1, its own sensor). Without one, the odometer finds the gears</dd>
+          <dt>Hub</dt><dd>None needed; a switch at the splitter can act as one</dd>
+          <dt>Buffer</dt><dd>None needed; one can be added for ramming</dd>
+          <dt>Tags</dt><dd>Read when a spool goes in: material, color, temperatures and weight, with the tag UID and reel UUID that Spoolman links by</dd>
+          <dt>Untagged spools</dt><dd>Load and print the same; you set the lane</dd>
+          <dt>Drying, humidity</dt><dd>None: no heater, no humidity sensor</dd>
+          <dt>Remaining filament</dt><dd>Not measured: the AMS Lite can't, even on an A1. The lane keeps the weight Spoolman or you set</dd>
+          <dt>Load</dt><dd>About 30&nbsp;mm/s until the sensor trips, or the odometer stops at the gears</dd>
+          <dt>Unload</dt><dd>Back past the splitter: sensor clear, then 30&nbsp;mm (settable), or a set distance by odometer</dd>
+          <dt>Path length</dt><dd>Learned on the first load</dd>
+          <dt>Overfeed stop</dt><dd>250&nbsp;mm past the learned path</dd>
+          <dt>Jam</dt><dd>A feed that stops short waits for the AMS Lite's own stall report, then fails</dd>
+          <dt>Grip check</dt><dd>The odometer has to move once the extruder pulls</dd>
+          <dt>Clog</dt><dd>Extruder pushing, odometer still: AFC pauses the print</dd>
+          <dt>Stuck spool</dt><dd>Reported by the AMS Lite itself; the load stops and names the tray</dd>
+        </dl>
+      </div>
+      <figure>
+        <div class="fig-scroll">
+          <svg viewBox="0 0 880 206" role="img" aria-label="An AMS Lite's four trays, not to scale. Four tubes run from the AMS Lite to a splitter at the toolhead, then one path through an optional toolhead sensor to the extruder gears. Tray 1 is loaded and stops at the sensor, or at the gears where its odometer stalls when there is no sensor; the other three are parked back in their own tubes, clear of the splitter. The path length from the AMS Lite is learned on the first load. An eject lets the tray go so the filament can be pulled out by hand.">
+            <!-- learned path -->
+            <line x1="200" y1="26" x2="672" y2="26" stroke="var(--muted)" stroke-width="1"></line>
+            <line x1="200" y1="20" x2="200" y2="32" stroke="var(--muted)" stroke-width="1"></line>
+            <line x1="672" y1="20" x2="672" y2="32" stroke="var(--muted)" stroke-width="1"></line>
+            <text x="436" y="16" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">path length, learned on the first load</text>
+
+            <!-- AMS Lite -->
+            <rect x="0" y="44" width="200" height="96" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+            <text x="12" y="64" font-family="Archivo, sans-serif" font-size="13" font-weight="700" fill="currentColor">AMS Lite</text>
+            <circle cx="34" cy="102" r="17" fill="var(--bay-1)"></circle>
+            <circle cx="78" cy="102" r="17" fill="var(--bay-2)"></circle>
+            <circle cx="122" cy="102" r="17" fill="var(--bay-3)"></circle>
+            <circle cx="166" cy="102" r="17" fill="var(--bay-4)"></circle>
+            <circle cx="34" cy="102" r="5" fill="var(--sunken)"></circle>
+            <circle cx="78" cy="102" r="5" fill="var(--sunken)"></circle>
+            <circle cx="122" cy="102" r="5" fill="var(--sunken)"></circle>
+            <circle cx="166" cy="102" r="5" fill="var(--sunken)"></circle>
+
+            <!-- four tubes into the splitter, one path on -->
+            <path d="M200 70 L520 70 C 562 70, 566 102, 606 102" fill="none" stroke="var(--rule)" stroke-width="7" stroke-linecap="round"></path>
+            <path d="M200 90 L520 90 C 562 90, 566 102, 606 102" fill="none" stroke="var(--rule)" stroke-width="7" stroke-linecap="round"></path>
+            <path d="M200 114 L520 114 C 562 114, 566 102, 606 102" fill="none" stroke="var(--rule)" stroke-width="7" stroke-linecap="round"></path>
+            <path d="M200 134 L520 134 C 562 134, 566 102, 606 102" fill="none" stroke="var(--rule)" stroke-width="7" stroke-linecap="round"></path>
+            <line x1="606" y1="102" x2="720" y2="102" stroke="var(--rule)" stroke-width="9" stroke-linecap="round"></line>
+            <path d="M200 70 L520 70 C 562 70, 562 102, 600 102 L672 102" fill="none" stroke="var(--bay-1)" stroke-width="2.5" stroke-linecap="round"></path>
+            <line x1="200" y1="90" x2="496" y2="90" stroke="var(--bay-2)" stroke-width="2.5" stroke-linecap="round"></line>
+            <line x1="200" y1="114" x2="496" y2="114" stroke="var(--bay-3)" stroke-width="2.5" stroke-linecap="round"></line>
+            <line x1="200" y1="134" x2="496" y2="134" stroke="var(--bay-4)" stroke-width="2.5" stroke-linecap="round"></line>
+            <line x1="684" y1="102" x2="826" y2="102" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 4"></line>
+
+            <!-- toolhead -->
+            <rect x="580" y="44" width="260" height="96" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+            <text x="592" y="64" font-family="Archivo, sans-serif" font-size="13" font-weight="700" fill="currentColor">Toolhead</text>
+            <path d="M602 90 L622 96 L622 108 L602 114 Z" fill="var(--sunken)" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+            <rect x="663" y="88" width="18" height="28" rx="2" fill="var(--signal-soft)" stroke="var(--signal)" stroke-width="2"></rect>
+            <circle cx="760" cy="91" r="10" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+            <circle cx="760" cy="113" r="10" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+            <text x="614" y="133" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">splitter</text>
+            <text x="672" y="133" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--signal)">sensor</text>
+            <text x="672" y="80" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">optional</text>
+            <text x="760" y="135" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">extruder</text>
+
+            <!-- parked trays -->
+            <line x1="500" y1="60" x2="500" y2="144" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 3"></line>
+            <line x1="500" y1="144" x2="500" y2="160" stroke="var(--muted)" stroke-width="1"></line>
+            <text x="492" y="176" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="currentColor">Unloads park back past the splitter:</text>
+            <text x="492" y="192" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">sensor clear + 30 mm, or by odometer</text>
+
+            <!-- load stop -->
+            <line x1="672" y1="140" x2="672" y2="160" stroke="var(--signal)" stroke-width="1"></line>
+            <text x="878" y="176" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--signal)">Load stops at the sensor, or at the gears</text>
+            <text x="878" y="192" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">when the odometer stalls; the extruder pulls</text>
+
+            <!-- eject -->
+            <text x="0" y="176" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="currentColor">Eject lets the tray go:</text>
+            <text x="0" y="192" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">pull the filament out by hand</text>
+          </svg>
+        </div>
+        <figcaption>Not to scale. All four trays share the splitter and the toolhead sensor, if there is one. A load ends at the sensor, or without one where the odometer stalls at the extruder gears, and an unload pulls back just far enough to clear the splitter instead of reeling the tube home.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Before you buy</p>
+        <h2>What you need, and what this isn't.</h2>
+      </div>
+      <div class="needs">
+        <div class="need">
+          <h3>A Klipper printer running AFC</h3>
+          <p>BridgeBox is a unit inside the Automated Filament Control (AFC) Klipper Add-On. If you already run AFC with a BoxTurtle or similar, an AMS becomes another thing it can drive.</p>
+        </div>
+        <div class="need">
+          <h3>A 24&nbsp;V 2–4&nbsp;A supply</h3>
+          <p>The AMS was powered by the printer; now it needs its own — the one thing not in the box. Any 24&nbsp;V adapter from 2 to 4&nbsp;A does it: the draw stays under 1&nbsp;A even with an AMS 2 Pro drying on it, and a 2&nbsp;A fuse on the board holds the ceiling whatever you plug in. The barrel matches an AMS 2 Pro's own adapter, so a spare one goes straight in. Buying rather than raiding a drawer? One AMS 2 Pro can dry off this supply; any other unit drying at the same time needs an adapter of its own.</p>
+        </div>
+        <div class="need warn">
+          <h3>One dryer can run off the bridge</h3>
+          <p>One AMS 2 Pro can dry on the bridge's own supply, over the same wire as everything else. A second one heating off that wire would pull the supply down and reset every unit on it, so AFC won't start it while the first is drying on bridge power. Plug an adapter into either one, even mid-cycle, and the block lifts. An AMS HT always needs its own mains cord to heat.</p>
+        </div>
+        <div class="need">
+          <h3>USB or WiFi, with nothing to type</h3>
+          <p>Plug BridgeBox in over USB and AFC finds it by itself, with no serial port to look up. For WiFi, join the hotspot BridgeBox puts up, pick your network on the page it shows, and Klipper gives it a private key, so there is no key to type. Start it on USB and it moves over to WiFi by itself once it has joined. To move it to another printer, AFC can clear its WiFi, or you can hold its button for ten seconds.</p>
+        </div>
+        <div class="need">
+          <h3>One config section, then swap units freely</h3>
+          <p>This is a maker's product, not an appliance, so there is Klipper config to set up. Only once, though: AFC's installer writes one BridgeBox section, and that section builds every unit, bay and sensor for you. After that the hardware is yours to rearrange. Plug an AMS in or pull one out while everything is running and it claims its own bays there and then — spare bays are held open for exactly that, so the ones you already had never shift and your Spoolman spools and tool numbers stay put.</p>
+        </div>
+        <div class="need warn">
+          <h3>An AMS Lite needs a BridgeBox of its own</h3>
+          <p>Nothing else can share its bus, so boxed units and HTs go on a second BridgeBox. A toolhead sensor is optional: a filament switch after the splitter its four tubes share ends each load (on a Snapmaker U1, the U1's own sensor), and without one the AMS Lite's odometer finds the extruder gears. The <a href="#ams-lite">AMS Lite section</a> has the rest.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Specifications</p>
+        <h2>The numbers.</h2>
+      </div>
+      <div class="spec-scroll">
+        <table>
+          <tbody>
+            <tr><th>Works with</th><td>Bambu Lab AMS 1 · AMS 2 Pro · AMS HT, all stock and unmodified. AMS Lite in testing</td></tr>
+            <tr><th>How many</th><td>4 boxed units + 8 HT per BridgeBox, 24 bays (Bambu's limit, not ours), or one AMS Lite on its own. A printer can run more than one BridgeBox</td></tr>
+            <tr><th>Connects at</th><td>The filament buffer's 4-pin socket, the printer's own plug. On an AMS Lite, its cable in the A1's place</td></tr>
+            <tr><th>Bus</th><td>RS-485, half-duplex, 1,228,800 baud</td></tr>
+            <tr><th>Link to the printer</th><td>USB or WiFi, plain text. Found by itself on USB; WiFi set up from its own hotspot, with no key to type. The host never touches the bus</td></tr>
+            <tr><th>Power</th><td>24 V, 2–4 A adapter (not included). 2 A fuse on the board. Same barrel as an AMS 2 Pro's. One AMS 2 Pro may dry on it; other dryers need their own supply</td></tr>
+            <tr><th>Addressing</th><td>Boxed units claim 0x00–0x03, HT units 0x80–0x87, at power-up. An AMS Lite has the bus to itself</td></tr>
+            <tr><th>If the link drops</th><td>Print pauses after 5 s of silence; a load in progress rides out 12 s</td></tr>
+            <tr><th>Enclosure</th><td>A printed part — the STLs come with it, so a replacement costs an evening</td></tr>
+            <tr><th>Updates</th><td>Over USB, or over the air on WiFi. Ships flashed, so an update never needs a button held</td></tr>
+            <tr><th>Reversible</th><td>Nothing on the AMS is modified. Unplug it and it goes back on a Bambu printer</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Optional</p>
+        <h2>A panel for the shelf.</h2>
+      </div>
+      <div class="panel-wrap">
+        <div class="prose" style="max-width:30rem">
+          <p class="lede">A 5-inch touchscreen that shows what every bay is holding, what's loaded, and how a drying cycle is going — on the bench, without opening a laptop.</p>
+          <p><strong>This one is firmware, not hardware.</strong> It is an image you flash onto a BTT Panda Touch or K-Touch — the same board under two names, sold as a Bambu accessory — which turns it into a display for your printer instead. If one is already sitting in a drawer since you stopped using it, that is the whole cost of this.</p>
+          <p>It follows every unit on the bridge, all twelve if you have them, one on the screen at a time. The Unit button at the top opens a list of them with each bay's color and material, so you can see the whole chain at a glance and tap the one you want.</p>
+          <p><strong>Not only the AMS.</strong> Tick <em>All AFC units</em> in that list and every other unit AFC runs joins it: Box Turtle, Night Owl, Quattro Box, EMU, HTLF, ViViD, Claymore, ACE, ACE 2, OpenAMS, a toolchanger's tools. Each gets the same card, with its lanes, spools and weights, the box temperature and humidity when it reports them, and its buffer when it has one. A lane with an AFC RFID reader, on an ACE 2, an OpenAMS, a ViViD or a Box Turtle, gets Scan Tag too, which reads the tag where the spool sits and fills in the lane. A unit with more than four lanes pages through them four at a time.</p>
+          <p>Every bay tile shows the filament, how full the spool is, its print temperatures and Spoolman spool. Its T# / Runout button sets the tool number and the infinite-runout lane from any lane on the printer, and Scan Tag reads the spool's tag. It dims itself when it has been left alone, and a tap brings it straight back.</p>
+          <p><strong>Heater control on the units that have one.</strong> An AMS 2 Pro, an AMS HT, an Anycubic ACE and an ACE 2 each get a Dryer Menu on their card: pick a temperature and a time, start or stop a cycle, and the card shows it drying and at what temperature. It sends the same commands as AFC's own dryer page and offers only what each unit accepts: up to 65&nbsp;°C on an AMS 2 Pro, 85&nbsp;°C on an HT, the ACE's configured ceiling, and spool rotation where the AMS supports it. Units without a heater show their temperature and humidity only.</p>
+          <p>It reaches the printer over your WiFi and never touches the filament bus. Unplug it in the middle of a print and the print doesn't notice — nothing on the shelf should be able to spoil a job.</p>
+        </div>
+        <figure>
+          <svg viewBox="0 0 860 1700" role="img" aria-label="Three screens from the BridgeBox touchscreen. First, the home screen: a status bar with the BridgeBox name, the bridge firmware version, Bridge Online, a Unit button reading Bambu AMS 1, a settings cog and Log Out, and below it one AMS 2 Pro card filling the screen, with its Dryer Menu, a Following status, a buffer gauge, humidity and chamber readouts, and four bay tiles showing tool number, filament, weight with a fill meter, temperatures, Spoolman spool, a T# / Runout button and a Scan Tag button. Second, the Unit list with the All AFC units box ticked: two Bambu units, then an ACE 2, an OpenAMS and a Box Turtle, each row with a chip per lane in its spool color. Third, the ACE 2 card: its own Dryer Menu, its buffer at 10 percent Advancing, humidity and box temperature, two empty lanes and two loaded ones, each loaded lane with a T# / Runout and a Scan Tag button.">
+            <g transform="translate(0,0) scale(1)">
+              <rect x="0" y="0" width="860" height="540" rx="16" fill="#1b1f23"></rect>
+              <clipPath id="scr1"><rect x="30" y="30" width="800" height="480" rx="4"></rect></clipPath>
+              <image x="30" y="30" width="800" height="480" clip-path="url(#scr1)" href="assets/panel-home.webp"></image>
+            </g>
+            <g transform="translate(0,580) scale(1)">
+              <rect x="0" y="0" width="860" height="540" rx="16" fill="#1b1f23"></rect>
+              <clipPath id="scr2"><rect x="30" y="30" width="800" height="480" rx="4"></rect></clipPath>
+              <image x="30" y="30" width="800" height="480" clip-path="url(#scr2)" href="assets/panel-units.webp"></image>
+            </g>
+            <g transform="translate(0,1160) scale(1)">
+              <rect x="0" y="0" width="860" height="540" rx="16" fill="#1b1f23"></rect>
+              <clipPath id="scr3"><rect x="30" y="30" width="800" height="480" rx="4"></rect></clipPath>
+              <image x="30" y="30" width="800" height="480" clip-path="url(#scr3)" href="assets/panel-ace2.webp"></image>
+            </g>
+          </svg>
+          <figcaption>The panel's own screens, rendered from its firmware. One unit fills the screen at a time; the Unit button opens a list of every unit on the bridge, and with All AFC units ticked, every other AFC unit on the printer too, like the ACE 2 at the bottom, with its own Dryer Menu and Scan Tag.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>BridgeBox</strong> — a stock Bambu AMS, on a printer you built.</p>
+    <p class="badge live" style="align-self:flex-start;margin:0">Available soon</p>
+  </div>
+</footer>
+</body>
+</html>
