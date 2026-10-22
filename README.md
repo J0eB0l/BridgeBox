@@ -1,24 +1,24 @@
-<p align="center"><img alt="BridgeBox. Your Bambu AMS, running on your Klipper printer. The closed BridgeBox case beside a board from the first batch." src="assets/readme/hero-dark.webp" width="100%"></p>
+<p align="center"><img alt="BridgeBox. Use your Bambu AMS with Klipper. The closed BridgeBox case beside a board from the first batch." src="assets/readme/hero-dark.webp" width="100%"></p>
 
 # BridgeBox
 
-A small board that takes the Bambu printer's place on the AMS's own wiring. The AMS keeps its stock firmware, never gets opened, and behaves exactly as it always has — it just answers to Klipper now.
+BridgeBox connects a stock Bambu AMS to a Klipper printer through AFC. No need to open the AMS, replace its board, or change its firmware.
 
 Running on hardware: AMS 1, AMS 2 Pro, AMS HT. In testing: AMS Lite.
 
 The full page: **[j0eb0l.github.io/BridgeBox](https://j0eb0l.github.io/BridgeBox/)**
 
-## An AMS only talks to a Bambu printer.
+## Why BridgeBox?
 
-Bambu's filament changer is good hardware — four bays, tag reading, a spool dryer, a buffer that manages slack. But it speaks a private language over its own cable, and it waits for a Bambu machine to lead the conversation. Plug it into anything else and it sits there doing nothing.
+Bambu makes useful AMS hardware, but normally you need a Bambu printer to use it. You can't just plug an AMS into a Klipper machine and expect it to work.
 
-So if you run Klipper and the AFC Add-On — on a Voron, a Trident, something you built yourself, or a commercial machine that supports it like the Snapmaker U1 — an AMS on the shelf is a box you can't use. The usual answer is to replace its brain with aftermarket boards and custom firmware. That works, and it also means taking a working machine apart.
+BridgeBox gives Klipper users another option. Whether you're running a Voron, a custom build, or another AFC-compatible printer, you can use an AMS without swapping its electronics.
 
-## It stands where the printer would stand.
+## How it works
 
-BridgeBox is the other half of that conversation. It plugs into the four-pin socket on the filament buffer — the one a Bambu printer normally occupies — and speaks the AMS's language back to it, on time, at full speed. From the AMS's side nothing has changed. It is still talking to a printer. That printer is now yours.
+BridgeBox plugs into the four-pin connector on the filament buffer, where a Bambu printer would normally connect. It communicates with the AMS over its existing connection while AFC handles everything from Klipper.
 
-**And none of it is one-way.** No board is replaced, no firmware is flashed, no case is opened — so the day you want the AMS back on a Bambu machine, you unplug BridgeBox and plug the printer in. It will not know it was ever gone.
+**Nothing on the AMS needs to change.** You don't have to replace a board, flash custom AMS firmware, or open the case. Want to use the AMS with a Bambu printer again? Disconnect BridgeBox and plug the AMS back into it.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/readme/wiring-dark.webp">
@@ -27,19 +27,19 @@ BridgeBox is the other half of that conversation. It plugs into the four-pin soc
 
 <sub>The only thing that changes is who leads the conversation. The buffer, the six-pin cable and the AMS itself are untouched, running the firmware they shipped with. An AMS Lite has no buffer, so BridgeBox plugs straight into it.</sub>
 
-## Everything the AMS already knew how to do.
+## What BridgeBox supports
 
-### Your slicer just changes tools
+### Automatic filament changes
 
 Multi-color and multi-material prints work the way they do on a Bambu machine. Load, unload, the buffer holding tension — all of it driven from Klipper.
 
-### It reads the RFID tag
+### RFID spool detection
 
 Put a tagged spool in a bay and the material, color and temperatures arrive by themselves. No typing in what you just loaded.
 
 With Spoolman 0.27 or newer, each tag is linked to its spool, so the spool is found again in whichever bay it goes into. For a tag Spoolman doesn't know yet, open its Add tag dialog and put the spool in a bay: the scan fills it in. Or turn on `auto_spoolman_create` and AFC makes a new spool from the tag.
 
-### It measures what's left
+### Remaining filament tracking
 
 The AMS turns the spool and measures it, by default as soon as a tagged spool goes into a bay. It is a real figure, not a running total that drifts, and it lands in Spoolman and on the spool cards in your web interface.
 
@@ -47,13 +47,13 @@ It works it out from the reel itself. The AMS turns the spool and counts filamen
 
 So measuring needs a genuine Bambu tag. An untagged or third-party spool loads and prints exactly the same; it just doesn't get measured, and its lane keeps whatever weight you or Spoolman set. The same goes for every spool on an AMS Lite, which has no way to measure one.
 
-### Dry a spool where it sits
+### Filament drying
 
 On the units with heaters, start and stop a drying cycle from the printer's interface and watch the chamber temperature and humidity while it runs.
 
 Turn on rotation and the AMS also turns the spools as it dries — a bay at a time, every few minutes — so a coil dries through rather than on one side. It will only turn a bay whose filament is out of the feeder, so unload those and leave the spools free to spin.
 
-### It notices, and it retries
+### Error detection and recovery
 
 A jam or a failed feed is caught, named in plain words, and retried. If it still can't recover it stops the print rather than carrying on with no filament.
 
@@ -61,13 +61,13 @@ Knock the cable out mid-print and it pauses within seconds — before the extrud
 
 When a spool runs out mid-print, the empty bay is caught within two seconds. The print pauses, or carries on from a runout lane on another extruder, and the AMS keeps pushing the leftover through so it can be pulled out.
 
-### Four boxed units and eight HTs
+### Multiple AMS units
 
 Chain up to four AMS 1 or AMS 2 Pro alongside eight HTs, mixed however you like — twenty-four bays on one bridge. That ceiling is Bambu's own, not ours: it is the room their bus leaves for addresses. The units claim theirs at power-up, exactly as they would behind a Bambu printer.
 
 Need more? Add a second BridgeBox. Each one runs its own chain, AFC names its units so they never clash, and its tool numbers carry on from the first.
 
-## The A1's AMS Lite, on a BridgeBox of its own.
+## AMS Lite support
 
 *New, and in testing.*
 
@@ -116,7 +116,7 @@ The AMS Lite is the open four-spool changer Bambu sells for the A1 and A1 mini. 
 
 <sub>Not to scale. All four trays share the splitter and the toolhead sensor, if there is one. A load ends at the sensor, or without one where the odometer stalls at the extruder gears, and an unload pulls back just far enough to clear the splitter instead of reeling the tube home.</sub>
 
-## What you need, and what this isn't.
+## What you'll need
 
 ### A Klipper printer running AFC
 
@@ -142,7 +142,7 @@ This is a maker's product, not an appliance, so there is Klipper config to set u
 
 Nothing else can share its bus, so boxed units and HTs go on a second BridgeBox. A toolhead sensor is optional: a filament switch after the splitter its four tubes share ends each load (on a Snapmaker U1, the U1's own sensor), and without one the AMS Lite's odometer finds the extruder gears. The [AMS Lite section](#the-a1s-ams-lite-on-a-bridgebox-of-its-own) has the rest.
 
-## The numbers.
+## Technical specifications
 
 | | |
 |---|---|
@@ -158,7 +158,7 @@ Nothing else can share its bus, so boxed units and HTs go on a second BridgeBox.
 | **Updates** | Over USB, or over the air on WiFi. Ships flashed, so an update never needs a button held |
 | **Reversible** | Nothing on the AMS is modified. Unplug it and it goes back on a Bambu printer |
 
-## A panel for the shelf.
+## Optional touchscreen display
 
 A 5-inch touchscreen that shows what every bay is holding, what's loaded, and how a drying cycle is going — on the bench, without opening a laptop.
 
@@ -183,4 +183,4 @@ It reaches the printer over your WiFi and never touches the filament bus. Unplug
 
 ---
 
-**BridgeBox** — a stock Bambu AMS, on a printer you built. Available soon.
+**BridgeBox** — use your Bambu AMS with Klipper. Available soon.
