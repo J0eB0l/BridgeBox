@@ -25,53 +25,53 @@ BridgeBox plugs into the four-pin connector on the filament buffer, where a Bamb
   <img alt="Three wiring paths compared. With a Bambu printer, the printer drives the RS-485 bus to the filament buffer and on to the AMS. With BridgeBox, a Klipper host connects over USB or WiFi to BridgeBox, which drives the same RS-485 bus to the same unmodified buffer and AMS. An AMS Lite has no buffer, so BridgeBox is wired straight to it, in the place of the A1&#x27;s cable." src="assets/readme/wiring-light.webp" width="100%">
 </picture>
 
-<sub>The only thing that changes is who leads the conversation. The buffer, the six-pin cable and the AMS itself are untouched, running the firmware they shipped with. An AMS Lite has no buffer, so BridgeBox plugs straight into it.</sub>
+<sub>BridgeBox uses the AMS's existing connections and firmware. The standard AMS keeps its original buffer and cables. The AMS Lite connects directly because it doesn't have a buffer.</sub>
 
 ## What BridgeBox supports
 
 ### Automatic filament changes
 
-Multi-color and multi-material prints work the way they do on a Bambu machine. Load, unload, the buffer holding tension — all of it driven from Klipper.
+Print with multiple colors or materials using Klipper and AFC. AFC handles filament loading, unloading, and changes between tools.
 
 ### RFID spool detection
 
-Put a tagged spool in a bay and the material, color and temperatures arrive by themselves. No typing in what you just loaded.
+Insert a Bambu-tagged spool and BridgeBox reads its material, color, and temperature information automatically.
 
 With Spoolman 0.27 or newer, each tag is linked to its spool, so the spool is found again in whichever bay it goes into. For a tag Spoolman doesn't know yet, open its Add tag dialog and put the spool in a bay: the scan fills it in. Or turn on `auto_spoolman_create` and AFC makes a new spool from the tag.
 
 ### Remaining filament tracking
 
-The AMS turns the spool and measures it, by default as soon as a tagged spool goes into a bay. It is a real figure, not a running total that drifts, and it lands in Spoolman and on the spool cards in your web interface.
+On supported AMS models, a genuine Bambu RFID spool can be measured to estimate how much filament is left. The result appears in Spoolman and your printer's web interface.
 
-It works it out from the reel itself. The AMS turns the spool and counts filament off the encoder until the RFID tag comes back round past the reader — one revolution tells it how much is still wound on, and that becomes the percentage.
+The AMS rotates the spool and uses its encoder and RFID reader to calculate the remaining percentage from one revolution.
 
-So measuring needs a genuine Bambu tag. An untagged or third-party spool loads and prints exactly the same; it just doesn't get measured, and its lane keeps whatever weight you or Spoolman set. The same goes for every spool on an AMS Lite, which has no way to measure one.
+This measurement requires a genuine Bambu RFID tag. Other spools still work for printing, but their remaining weight must be entered or tracked separately. The AMS Lite doesn't support this measurement.
 
 ### Filament drying
 
-On the units with heaters, start and stop a drying cycle from the printer's interface and watch the chamber temperature and humidity while it runs.
+For AMS models with built-in heaters, start or stop drying from your printer interface and monitor temperature and humidity.
 
-Turn on rotation and the AMS also turns the spools as it dries — a bay at a time, every few minutes — so a coil dries through rather than on one side. It will only turn a bay whose filament is out of the feeder, so unload those and leave the spools free to spin.
+Supported AMS models can also rotate spools during drying. The filament needs to be unloaded from the feeder so the spool can turn freely.
 
 ### Error detection and recovery
 
-A jam or a failed feed is caught, named in plain words, and retried. If it still can't recover it stops the print rather than carrying on with no filament.
+AFC detects failed loads and jams, retries when possible, and pauses the print if it can't recover.
 
-Knock the cable out mid-print and it pauses within seconds — before the extruder can grind away at an AMS nobody is driving. A load already running rides out a brief blip and finishes.
+If BridgeBox loses its connection during a print, AFC pauses the job. Short interruptions during a filament load have a separate timeout.
 
-When a spool runs out mid-print, the empty bay is caught within two seconds. The print pauses, or carries on from a runout lane on another extruder, and the AMS keeps pushing the leftover through so it can be pulled out.
+When filament runs out, AFC can pause the print or switch to a configured backup lane. The AMS can then feed out the remaining filament for removal.
 
 ### Multiple AMS units
 
-Chain up to four AMS 1 or AMS 2 Pro alongside eight HTs, mixed however you like — twenty-four bays on one bridge. That ceiling is Bambu's own, not ours: it is the room their bus leaves for addresses. The units claim theirs at power-up, exactly as they would behind a Bambu printer.
+A single BridgeBox supports up to four AMS 1/AMS 2 Pro units plus eight AMS HT units, for a total of 24 filament slots. This limit comes from the AMS bus addressing system.
 
-Need more? Add a second BridgeBox. Each one runs its own chain, AFC names its units so they never clash, and its tool numbers carry on from the first.
+You can add another BridgeBox if you need more slots. AFC keeps the units and tool assignments separate.
 
 ## AMS Lite support
 
 *New, and in testing.*
 
-The AMS Lite is the open four-spool changer Bambu sells for the A1 and A1 mini. It has no enclosure, no buffer and no heater, so BridgeBox runs it a little differently from the other units.
+The AMS Lite is the four-spool system used with the Bambu A1 series. Since it doesn't have a buffer or built-in dryer, its setup is different from the enclosed AMS models.
 
 **It has its BridgeBox to itself.** BridgeBox goes on the AMS Lite's cable in the A1's place. Nothing else can share that bus, and AFC refuses a setup that tries, so boxed units and HTs go on a second BridgeBox on the same printer.
 
@@ -154,13 +154,13 @@ Nothing else can share its bus, so boxed units and HTs go on a second BridgeBox.
 | **Power** | 24 V, 2–4 A adapter (not included). 2 A fuse on the board. Same barrel as an AMS 2 Pro's. One AMS 2 Pro may dry on it; other dryers need their own supply |
 | **Addressing** | Boxed units claim 0x00–0x03, HT units 0x80–0x87, at power-up. An AMS Lite has the bus to itself |
 | **If the link drops** | Print pauses after 5 s of silence; a load in progress rides out 12 s |
-| **Enclosure** | A printed part — the STLs come with it, so a replacement costs an evening |
+| **Enclosure** | 3D-printed enclosure; STL files included |
 | **Updates** | Over USB, or over the air on WiFi. Ships flashed, so an update never needs a button held |
 | **Reversible** | Nothing on the AMS is modified. Unplug it and it goes back on a Bambu printer |
 
 ## Optional touchscreen display
 
-A 5-inch touchscreen that shows what every bay is holding, what's loaded, and how a drying cycle is going — on the bench, without opening a laptop.
+Use a compatible 5-inch touchscreen to check filament slots, loaded spools, and drying status without opening Mainsail or Fluidd.
 
 **This one is firmware, not hardware.** It is an image you flash onto a BTT Panda Touch or K-Touch — the same board under two names, sold as a Bambu accessory — which turns it into a display for your printer instead. If one is already sitting in a drawer since you stopped using it, that is the whole cost of this.
 
@@ -172,7 +172,7 @@ Every bay tile shows the filament, how full the spool is, its print temperatures
 
 **Heater control on the units that have one.** An AMS 2 Pro, an AMS HT, an Anycubic ACE and an ACE 2 each get a Dryer Menu on their card: pick a temperature and a time, start or stop a cycle, and the card shows it drying and at what temperature. It sends the same commands as AFC's own dryer page and offers only what each unit accepts: up to 65 °C on an AMS 2 Pro, 85 °C on an HT, the ACE's configured ceiling, and spool rotation where the AMS supports it. Units without a heater show their temperature and humidity only.
 
-It reaches the printer over your WiFi and never touches the filament bus. Unplug it in the middle of a print and the print doesn't notice — nothing on the shelf should be able to spoil a job.
+The touchscreen connects over Wi-Fi and doesn't control the filament bus directly. Disconnecting the display won't interrupt a print.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/readme/panel-dark.webp">
