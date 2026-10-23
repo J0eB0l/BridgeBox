@@ -181,6 +181,10 @@ The touchscreen connects over Wi-Fi and doesn't control the filament bus directl
 
 <sub>The panel's own screens, rendered from its firmware. One unit fills the screen at a time; the Unit button opens a list of every unit on the bridge, and with All AFC units ticked, every other AFC unit on the printer too, like the ACE 2 at the bottom, with its own Dryer Menu and Scan Tag.</sub>
 
+## Development status
+
+Some features described here are still in active development and may not be fully implemented when BridgeBox first releases. Feature availability may change as testing continues.
+
 ## Built with AFC
 
 BridgeBox was developed in collaboration with the AFC project. The BridgeBox software is licensed exclusively to AFC-Klipper-Add-On. Thanks to the AFC team for working with us to make this integration possible.
