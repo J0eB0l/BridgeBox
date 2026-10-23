@@ -68,29 +68,28 @@ A single BridgeBox supports up to four AMS 1/AMS 2 Pro units plus eight AMS HT u
 You can add another BridgeBox if you need more slots. AFC keeps the units and tool assignments separate.
 
 
-## AMS 1, AMS 2 Pro and AMS HT at a glance
+## AMS model comparison
 
-These models share the standard AMS connection and buffer. Model-specific features, such as heating and spool capacity, are noted below.
+All four models work with BridgeBox and AFC. The differences below come from each AMS model's hardware and filament path.
 
-| | |
-|---|---|
-| **Slots** | 4 per enclosed AMS; AMS HT has 1 |
-| **Bus** | Shared RS-485 bus through the stock filament buffer; up to 4 AMS 1/AMS 2 Pro units and 8 AMS HT units per BridgeBox |
-| **Toolhead sensor** | AFC printer configuration determines toolhead sensing; the AMS buffer provides its own filament detection |
-| **Hub** | Uses the existing AMS buffer and filament path |
-| **Buffer** | Stock buffer retained, with no modification to the AMS |
-| **Tags** | Reads Bambu RFID material, color, temperatures and spool identity; Spoolman can associate a tag with a spool |
-| **Untagged spools** | Can load and print; set the filament details manually |
-| **Drying, humidity** | AMS 2 Pro and AMS HT support heater controls; temperature and humidity reporting depends on the model. AMS 1 has no built-in heater |
-| **Remaining filament** | Supported enclosed AMS models can estimate remaining filament on genuine Bambu-tagged spools |
-| **Load** | AFC controls filament loading and tool changes through BridgeBox and the stock AMS feed system |
-| **Unload** | AFC controls unloading and filament changes through the stock AMS feed system |
-| **Path length** | Managed through AFC's configured filament path and sensors |
-| **Overfeed stop** | AFC's configured loading limits and sensor checks apply |
-| **Jam** | AFC detects failed loads and jams, retries when possible, and pauses if recovery fails |
-| **Grip check** | Depends on the printer's AFC sensor and extruder configuration; the AMS Lite odometer check is specific to Lite |
-| **Clog** | AFC and the printer's configured sensors handle detection; Lite's odometer-based check is model-specific |
-| **Stuck spool** | AMS-reported errors are handled through BridgeBox and AFC |
+| Feature | AMS 1 | AMS 2 Pro | AMS HT | AMS Lite |
+|---|---|---|---|---|
+| Spool slots | 4 | 4 | 1 | 4 |
+| Connection | Stock buffer; shared bus | Stock buffer; shared bus | Stock buffer; shared bus | Direct cable; dedicated BridgeBox |
+| Multiple units | Up to 4 enclosed units total | Up to 4 enclosed units total | Up to 8 HT units | One Lite per BridgeBox |
+| Toolhead sensing | AMS buffer; printer sensors configured in AFC | AMS buffer; printer sensors configured in AFC | AMS buffer; printer sensors configured in AFC | Optional toolhead sensor; odometer can detect arrival |
+| Buffer / hub | Stock AMS buffer | Stock AMS buffer | Stock AMS buffer | No stock buffer; optional external buffer |
+| RFID tags | Material, color, temperatures, spool identity | Material, color, temperatures, spool identity | Material, color, temperatures, spool identity | Material, color, temperatures, UID and reel UUID |
+| Untagged spools | Supported; set lane details | Supported; set lane details | Supported; set lane details | Supported; set lane details |
+| Drying | No built-in heater | Built-in heater; up to 65 °C | Built-in heater; up to 85 °C | No built-in heater |
+| Temperature / humidity | Model-dependent reporting | Temperature and humidity reporting | Temperature and humidity reporting | No built-in humidity sensor |
+| Remaining filament | Estimate on supported tagged spools | Estimate on supported tagged spools | Estimate on supported tagged spools | Uses Spoolman or manually set weight |
+| Load / unload | Controlled through AFC | Controlled through AFC | Controlled through AFC | Controlled through AFC; parks filament clear of splitter |
+| Path management | AFC configuration and sensors | AFC configuration and sensors | AFC configuration and sensors | Learns path on first load via odometer |
+| Overfeed protection | AFC loading limits and sensor checks | AFC loading limits and sensor checks | AFC loading limits and sensor checks | Stops 250 mm past learned path |
+| Jam handling | AFC detects and handles failed loads | AFC detects and handles failed loads | AFC detects and handles failed loads | AMS Lite stall reporting and AFC handling |
+| Filament grip / clogs | Printer/AFC sensor configuration | Printer/AFC sensor configuration | Printer/AFC sensor configuration | Odometer checks movement and can trigger AFC pause |
+| Stuck spool | AMS errors handled by AFC | AMS errors handled by AFC | AMS errors handled by AFC | AMS Lite reports stuck/tangled spool |
 
 ## AMS Lite support
 
@@ -111,26 +110,6 @@ The AMS Lite is the four-spool system used with the Bambu A1 series. Since it do
 **Unloads stop short.** Its spring-loaded holders take back only a little filament, so it never reels the tube home. With a sensor, it pulls back until the sensor clears, then 30 mm more (set that to clear your splitter). Without one, it pulls back a set distance, counted on the odometer. Either way it parks there, out of the other trays' way and ready for its next load. To take a spool out, eject the lane: the AMS Lite lets go and you pull the filament out by hand.
 
 
-
-| | |
-|---|---|
-| **Trays** | 4, on spring-loaded holders |
-| **Bus** | Required: alone on its BridgeBox |
-| **Toolhead sensor** | Optional: one after the splitter serves all four trays (on a U1, its own sensor). Without one, the odometer finds the gears |
-| **Hub** | None needed; a switch at the splitter can act as one |
-| **Buffer** | None needed; one can be added for ramming |
-| **Tags** | Read when a spool goes in: material, color, temperatures and weight, with the tag UID and reel UUID that Spoolman links by |
-| **Untagged spools** | Load and print the same; you set the lane |
-| **Drying, humidity** | None: no heater, no humidity sensor |
-| **Remaining filament** | Not measured: the AMS Lite can't, even on an A1. The lane keeps the weight Spoolman or you set |
-| **Load** | About 30 mm/s until the sensor trips, or the odometer stops at the gears |
-| **Unload** | Back past the splitter: sensor clear, then 30 mm (settable), or a set distance by odometer |
-| **Path length** | Learned on the first load |
-| **Overfeed stop** | 250 mm past the learned path |
-| **Jam** | A feed that stops short waits for the AMS Lite's own stall report, then fails |
-| **Grip check** | The odometer has to move once the extruder pulls |
-| **Clog** | Extruder pushing, odometer still: AFC pauses the print |
-| **Stuck spool** | Reported by the AMS Lite itself; the load stops and names the tray |
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/readme/ams-lite-dark.webp">
