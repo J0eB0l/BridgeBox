@@ -67,6 +67,31 @@ A single BridgeBox supports up to four AMS 1/AMS 2 Pro units plus eight AMS HT u
 
 You can add another BridgeBox if you need more slots. AFC keeps the units and tool assignments separate.
 
+
+## AMS 1, AMS 2 Pro and AMS HT at a glance
+
+These models share the standard AMS connection and buffer. Model-specific features, such as heating and spool capacity, are noted below.
+
+| | |
+|---|---|
+| **Slots** | 4 per enclosed AMS; AMS HT has 1 |
+| **Bus** | Shared RS-485 bus through the stock filament buffer; up to 4 AMS 1/AMS 2 Pro units and 8 AMS HT units per BridgeBox |
+| **Toolhead sensor** | AFC printer configuration determines toolhead sensing; the AMS buffer provides its own filament detection |
+| **Hub** | Uses the existing AMS buffer and filament path |
+| **Buffer** | Stock buffer retained, with no modification to the AMS |
+| **Tags** | Reads Bambu RFID material, color, temperatures and spool identity; Spoolman can associate a tag with a spool |
+| **Untagged spools** | Can load and print; set the filament details manually |
+| **Drying, humidity** | AMS 2 Pro and AMS HT support heater controls; temperature and humidity reporting depends on the model. AMS 1 has no built-in heater |
+| **Remaining filament** | Supported enclosed AMS models can estimate remaining filament on genuine Bambu-tagged spools |
+| **Load** | AFC controls filament loading and tool changes through BridgeBox and the stock AMS feed system |
+| **Unload** | AFC controls unloading and filament changes through the stock AMS feed system |
+| **Path length** | Managed through AFC's configured filament path and sensors |
+| **Overfeed stop** | AFC's configured loading limits and sensor checks apply |
+| **Jam** | AFC detects failed loads and jams, retries when possible, and pauses if recovery fails |
+| **Grip check** | Depends on the printer's AFC sensor and extruder configuration; the AMS Lite odometer check is specific to Lite |
+| **Clog** | AFC and the printer's configured sensors handle detection; Lite's odometer-based check is model-specific |
+| **Stuck spool** | AMS-reported errors are handled through BridgeBox and AFC |
+
 ## AMS Lite support
 
 The AMS Lite is the four-spool system used with the Bambu A1 series. Since it doesn't have a buffer or built-in dryer, its setup is different from the enclosed AMS models.
