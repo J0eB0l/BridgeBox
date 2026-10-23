@@ -187,7 +187,7 @@ All features described here have been tested and proven functional. Development 
 
 ## Developed in collaboration with AFC
 
-BridgeBox was developed in conjunction with the AFC team to bring Bambu AMS support to Klipper-based printers. The BridgeBox software was developed specifically for integration with AFC-Klipper-Add-On and is licensed exclusively to the AFC project. Thanks to the AFC team for their collaboration, support, and contributions throughout development.
+BridgeBox was developed in conjunction with the AFC team to bring Bambu AMS support to Klipper-based printers. While the AFC-Klipper-Add-On project is open source, the BridgeBox transport component is proprietary and licensed exclusively to the AFC project. A big thank you to the AFC team for their collaboration, support, and contributions throughout development.
 
 - [AFC-Klipper-Add-On on GitHub](https://github.com/AFCProject/AFC-Klipper-Add-On)
 - [AFC documentation](https://www.afcproject.dev/)
