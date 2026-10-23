@@ -120,7 +120,7 @@ The AMS Lite is the four-spool system used with the Bambu A1 series. Since it do
 
 ### A Klipper printer running AFC
 
-BridgeBox works with AFC-Klipper-Add-On. If you already run AFC with a BoxTurtle or similar, an AMS becomes another thing it can drive.
+BridgeBox works with [AFC-Klipper-Add-On](https://github.com/J0eB0l/AFC-Klipper-Add-On). If you already run AFC with a BoxTurtle or similar, an AMS becomes another thing it can drive.
 
 ### A 24 V 2–4 A supply
 
@@ -180,6 +180,13 @@ The touchscreen connects over Wi-Fi and doesn't control the filament bus directl
 </picture>
 
 <sub>The panel's own screens, rendered from its firmware. One unit fills the screen at a time; the Unit button opens a list of every unit on the bridge, and with All AFC units ticked, every other AFC unit on the printer too, like the ACE 2 at the bottom, with its own Dryer Menu and Scan Tag.</sub>
+
+## Built with AFC
+
+BridgeBox was developed in collaboration with the AFC project. The BridgeBox software is licensed exclusively to AFC-Klipper-Add-On. Thanks to the AFC team for working with us to make this integration possible.
+
+- [AFC-Klipper-Add-On on GitHub](https://github.com/J0eB0l/AFC-Klipper-Add-On)
+- [AFC documentation](https://www.afcproject.dev/)
 
 ---
 
