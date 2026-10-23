@@ -85,7 +85,7 @@ The AMS Lite is the four-spool system used with the Bambu A1 series. Since it do
 
 **Unloads stop short.** Its spring-loaded holders take back only a little filament, so it never reels the tube home. With a sensor, it pulls back until the sensor clears, then 30 mm more (set that to clear your splitter). Without one, it pulls back a set distance, counted on the odometer. Either way it parks there, out of the other trays' way and ready for its next load. To take a spool out, eject the lane: the AMS Lite lets go and you pull the filament out by hand.
 
-**AMS Lite features.** AMS Lite support has been tested and is working, including AFC loading and unloading, RFID tag and UID reading, spool presence detection, sensorless operation, and odometer-based path, jam, grip, and clog checks. Like the other supported AMS models, it uses BridgeBox to connect to Klipper through AFC.
+
 
 | | |
 |---|---|
