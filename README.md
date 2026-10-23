@@ -183,7 +183,7 @@ The touchscreen connects over Wi-Fi and doesn't control the filament bus directl
 
 ## Development status
 
-Some features described here are still in active development and may not be fully implemented when BridgeBox first releases. Feature availability may change as testing continues.
+All features described here have been tested and proven functional. Development is ongoing, and while these features are working, some may not be fully integrated or available in the initial release. Additional functionality will be introduced as development continues.
 
 ## Built with AFC
 
