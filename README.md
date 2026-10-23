@@ -4,7 +4,7 @@
 
 BridgeBox connects a stock Bambu AMS to a Klipper printer through AFC-Klipper-Add-On (AFC). No need to open the AMS, replace its board, or change its firmware.
 
-Running on hardware: AMS 1, AMS 2 Pro, AMS HT. In testing: AMS Lite.
+Running on hardware: AMS 1, AMS 2 Pro, AMS HT, and AMS Lite.
 
 The full page: **[j0eb0l.github.io/BridgeBox](https://j0eb0l.github.io/BridgeBox/)**
 
@@ -68,8 +68,6 @@ A single BridgeBox supports up to four AMS 1/AMS 2 Pro units plus eight AMS HT u
 You can add another BridgeBox if you need more slots. AFC keeps the units and tool assignments separate.
 
 ## AMS Lite support
-
-*New, and in testing.*
 
 The AMS Lite is the four-spool system used with the Bambu A1 series. Since it doesn't have a buffer or built-in dryer, its setup is different from the enclosed AMS models.
 
@@ -146,7 +144,7 @@ Nothing else can share its bus, so boxed units and HTs go on a second BridgeBox.
 
 | | |
 |---|---|
-| **Works with** | Bambu Lab AMS 1 · AMS 2 Pro · AMS HT, all stock and unmodified. AMS Lite in testing |
+| **Works with** | Bambu Lab AMS 1 · AMS 2 Pro · AMS HT · AMS Lite, all stock and unmodified |
 | **How many** | 4 boxed units + 8 HT per BridgeBox, 24 bays (Bambu's limit, not ours), or one AMS Lite on its own. A printer can run more than one BridgeBox |
 | **Connects at** | The filament buffer's 4-pin socket, the printer's own plug. On an AMS Lite, its cable in the A1's place |
 | **Bus** | RS-485, half-duplex, 1,228,800 baud |
