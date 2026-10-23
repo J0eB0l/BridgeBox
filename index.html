@@ -445,6 +445,35 @@
     </div>
   </section>
 
+  <section id="enclosed-ams-details">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">AMS 1 · AMS 2 Pro · AMS HT</p>
+        <h2>Enclosed AMS features at a glance</h2>
+      </div>
+      <p>These models share the standard AMS connection and buffer. Model-specific features, such as heating and spool capacity, are noted below.</p>
+      <dl class="facts" aria-label="Enclosed AMS models at a glance">
+        <dt>Slots</dt><dd>4 per enclosed AMS; AMS HT has 1</dd>
+        <dt>Bus</dt><dd>Shared RS-485 bus through the stock filament buffer; up to 4 AMS 1/AMS 2 Pro units and 8 AMS HT units per BridgeBox</dd>
+        <dt>Toolhead sensor</dt><dd>AFC printer configuration determines toolhead sensing; the AMS buffer provides its own filament detection</dd>
+        <dt>Hub</dt><dd>Uses the existing AMS buffer and filament path</dd>
+        <dt>Buffer</dt><dd>Stock buffer retained, with no modification to the AMS</dd>
+        <dt>Tags</dt><dd>Reads Bambu RFID material, color, temperatures and spool identity; Spoolman can associate a tag with a spool</dd>
+        <dt>Untagged spools</dt><dd>Can load and print; set the filament details manually</dd>
+        <dt>Drying, humidity</dt><dd>AMS 2 Pro and AMS HT support heater controls; temperature and humidity reporting depends on the model. AMS 1 has no built-in heater</dd>
+        <dt>Remaining filament</dt><dd>Supported enclosed AMS models can estimate remaining filament on genuine Bambu-tagged spools</dd>
+        <dt>Load</dt><dd>AFC controls filament loading and tool changes through BridgeBox and the stock AMS feed system</dd>
+        <dt>Unload</dt><dd>AFC controls unloading and filament changes through the stock AMS feed system</dd>
+        <dt>Path length</dt><dd>Managed through AFC's configured filament path and sensors</dd>
+        <dt>Overfeed stop</dt><dd>AFC's configured loading limits and sensor checks apply</dd>
+        <dt>Jam</dt><dd>AFC detects failed loads and jams, retries when possible, and pauses if recovery fails</dd>
+        <dt>Grip check</dt><dd>Depends on the printer's AFC sensor and extruder configuration; the AMS Lite odometer check is specific to Lite</dd>
+        <dt>Clog</dt><dd>AFC and the printer's configured sensors handle detection; Lite's odometer-based check is model-specific</dd>
+        <dt>Stuck spool</dt><dd>AMS-reported errors are handled through BridgeBox and AFC</dd>
+      </dl>
+    </div>
+  </section>
+
   <section class="band" id="ams-lite">
     <div class="wrap">
       <div class="head">
