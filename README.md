@@ -2,7 +2,7 @@
 
 # BridgeBox
 
-BridgeBox connects a stock Bambu AMS to a Klipper printer through AFC-Klipper-Add-On (AFC). No need to open the AMS, replace its board, or change its firmware.
+BridgeBox connects a stock Bambu AMS to a Klipper printer through AFC-Klipper-Add-On (AFC). No need to Open<sup>the</sup>AMS, replace its board, or change its firmware.
 
 Running on hardware: AMS 1, AMS 2 Pro, AMS HT, and AMS Lite.
 
