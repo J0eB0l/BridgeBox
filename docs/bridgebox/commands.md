@@ -3,9 +3,22 @@
 These commands are added by the `[AFC_BridgeBox]` chain and the Bambu AMS units it builds. They work alongside AFC's own
 commands: loading, unloading, `T#`, `SET_MAP` and the rest work on Bambu lanes like on any other lane.
 
-Most commands take `UNIT=<unit>`, the bay name of a unit such as `Bambu_AMS_1`, or `LANE=<lane>` for one lane. The
-`AFC_BRIDGEBOX_*` commands take `CHAIN=<chain>` on a printer with more than one BridgeBox; the first chain also answers
-without it. Each command prints its usage when run without arguments.
+Most commands take `UNIT=<unit>`, the bay name of a unit such as `Bambu_AMS_1`, or `LANE=<lane>` for one lane. Each
+command prints its usage when run without arguments.
+
+!!! tip "More than one BridgeBox"
+
+    The `AFC_BRIDGEBOX_*` commands act on one chain at a time. Without `CHAIN=`, they act on the first chain in your
+    config. To reach another chain, add `CHAIN=` with the name from its section header. For
+    `[AFC_BridgeBox chain2]`:
+
+    ```
+    AFC_BRIDGEBOX_BAYS CHAIN=chain2
+    ```
+
+    This goes for `AFC_BRIDGEBOX_BAYS`, `AFC_BRIDGEBOX_ASSIGN`, `AFC_BRIDGEBOX_UNASSIGN`, `AFC_BRIDGEBOX_REPLACE`,
+    `AFC_BRIDGEBOX_FORGET`, `AFC_BRIDGEBOX_RESET_WIFI` and `AFC_BRIDGEBOX_FORGET_BOARD`. Commands that take `UNIT=` or
+    `LANE=` find the right chain by themselves.
 
 -----
 
@@ -27,10 +40,12 @@ See [Bays, Lanes and Hot-Swap](bays.md) for how bays work.
 
 ### AFC_BRIDGEBOX_BAYS
 
-Opens the bay manager: every bay, its kind and the unit on it, with an Unassign button for each occupied bay.
+Opens the bay manager: every bay, its kind and the unit on it, with an Unassign button for each occupied bay. It shows
+one chain; add `CHAIN=<chain>` for any chain but the first.
 
 ```
 AFC_BRIDGEBOX_BAYS
+AFC_BRIDGEBOX_BAYS CHAIN=chain2
 ```
 
 ### AFC_BRIDGEBOX_ASSIGN

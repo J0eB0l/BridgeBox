@@ -95,7 +95,8 @@ own, the first AMS gets `T0` - `T3`; beside a unit already on `T0` - `T3`, it ge
 | `AFC_BRIDGEBOX_REPLACE UID=<new> OLD=<old>` | Puts a new unit on an offline unit's bay. |
 
 Use a unit's UID or its bay name. `AFC_BAMBU_UIDS` lists the UIDs on the bus. On a printer with more than one
-BridgeBox, add `CHAIN=<name>` for any chain but the first.
+BridgeBox, add `CHAIN=<name>` for any chain but the first, such as `AFC_BRIDGEBOX_BAYS CHAIN=chain2` (see
+[More than one BridgeBox](commands.md)).
 
 !!! note "A lane loaded to the toolhead"
 
