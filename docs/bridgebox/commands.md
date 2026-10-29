@@ -8,7 +8,7 @@ command prints its usage when run without arguments.
 
 !!! tip "More than one BridgeBox"
 
-    The `AFC_BRIDGEBOX_*` commands act on one chain at a time. Without `CHAIN=`, they act on the first chain in your
+    `AFC_BAMBU_UIDS` and the `AFC_BRIDGEBOX_*` commands act on one chain at a time. Without `CHAIN=`, they act on the first chain in your
     config. To reach another chain, add `CHAIN=` with the name from its section header. For
     `[AFC_BridgeBox chain2]`:
 
@@ -16,8 +16,8 @@ command prints its usage when run without arguments.
     AFC_BRIDGEBOX_BAYS CHAIN=chain2
     ```
 
-    This goes for `AFC_BRIDGEBOX_BAYS`, `AFC_BRIDGEBOX_ASSIGN`, `AFC_BRIDGEBOX_UNASSIGN`, `AFC_BRIDGEBOX_REPLACE`,
-    `AFC_BRIDGEBOX_FORGET`, `AFC_BRIDGEBOX_RESET_WIFI` and `AFC_BRIDGEBOX_FORGET_BOARD`. Commands that take `UNIT=` or
+    This goes for `AFC_BAMBU_UIDS`, `AFC_BRIDGEBOX_BAYS`, `AFC_BRIDGEBOX_ASSIGN`, `AFC_BRIDGEBOX_UNASSIGN`,
+    `AFC_BRIDGEBOX_REPLACE`, `AFC_BRIDGEBOX_FORGET`, `AFC_BRIDGEBOX_RESET_WIFI` and `AFC_BRIDGEBOX_FORGET_BOARD`. Commands that take `UNIT=` or
     `LANE=` find the right chain by themselves.
 
 -----
@@ -26,11 +26,12 @@ command prints its usage when run without arguments.
 
 ### AFC_BAMBU_UIDS
 
-Lists the units on the bus, read straight off the wire, and the BridgeBox firmware version. It takes no arguments and
-reads the first chain's BridgeBox.
+Lists the units on the bus, read straight off the wire, and the BridgeBox firmware version. Add `CHAIN=<chain>` for
+any chain but the first.
 
 ```
 AFC_BAMBU_UIDS
+AFC_BAMBU_UIDS CHAIN=chain2
 ```
 
 -----
