@@ -134,6 +134,13 @@
   }
 
   .badges{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.2rem}
+  /* The hero is dark in both themes, so the button keeps the dark-theme blue. */
+  .hero-docs{
+    align-self:flex-start;display:inline-flex;align-items:center;gap:.5rem;
+    background:#54b3e2;color:#06141c;font-weight:600;text-decoration:none;
+    padding:.6rem 1.1rem;border-radius:6px;margin-top:.3rem
+  }
+  .hero-docs:hover{background:#7cc6ea}
   .badge{
     font-family:var(--mono);font-size:.72rem;letter-spacing:.03em;
     padding:.28rem .6rem;border:1px solid var(--deep-rule);border-radius:2px;
@@ -246,6 +253,7 @@
           <span class="badge">AMS HT</span>
           <span class="badge">AMS Lite</span>
         </div>
+        <a class="hero-docs" href="docs/">Read the documentation <span aria-hidden="true">&rarr;</span></a>
       </div>
       <div class="hero-shots">
         <figure>

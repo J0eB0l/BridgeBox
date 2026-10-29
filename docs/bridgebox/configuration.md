@@ -33,13 +33,10 @@ The `[AFC_extruder]` this chain feeds. One chain feeds one extruder. Each AMS fe
 
 ??? tip "No toolhead sensor"
 
-    With `buffer_type: bambu`, the chain's buffer also watches the AMS odometer, and can stand in for a toolhead
-    sensor. Set `pin_tool_start: buffer` in the `[AFC_extruder]` the chain feeds:
+    The chain's buffer also watches the AMS odometer, so it can stand in for a toolhead sensor. Set
+    `pin_tool_start: buffer` in the `[AFC_extruder]` the chain feeds:
 
     ```ini
-    [AFC_BridgeBox chain1]
-    buffer_type: bambu
-
     [AFC_extruder extruder]
     pin_tool_start: buffer
     ```
@@ -62,7 +59,7 @@ The `[AFC_extruder]` this chain feeds. One chain feeds one extruder. Each AMS fe
 | `auto_drop` | `False` | Drop an unplugged unit's lanes and `T#` live once it has been offline for `release_grace`. Never during a print or while one of its lanes is loaded to the toolhead. The template sets it to `True`. |
 | `release_grace` | `10` | Seconds offline before `auto_drop` drops a unit (minimum 2). |
 | `enroll_grace` | `15` | Seconds a unit must stay online before its bay is saved for it. |
-| `buffer_type` | `FPS_PSF` | `FPS_PSF` follows the AMS buffer's tension. `bambu` also watches the AMS odometer so the buffer can stand in for a toolhead sensor. |
+| `buffer_type` | `bambu` | `bambu` follows the AMS buffer's tension and also watches the AMS odometer, so the buffer can stand in for a toolhead sensor. `FPS_PSF` follows the tension only. |
 | `dry_max_temp` | `0` | Drying ceiling in °C for every heated unit. `0` uses each model's own (AMS 2 Pro 65, AMS HT 85). A higher value never raises it. |
 | `state_file` | this file | Where the chain keeps what it learns. |
 

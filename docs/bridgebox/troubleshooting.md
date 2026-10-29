@@ -47,7 +47,7 @@ tells you straight away whether the problem is between Klipper and the BridgeBox
 ??? Answer
 
     Each AMS feeds until the extruder's toolhead sensor sees filament. Check that the `[AFC_extruder]` the chain feeds
-    has a working `pin_tool_start`, or `pin_tool_start: buffer` with `buffer_type: bambu` on the chain. See
+    has a working `pin_tool_start`, or `pin_tool_start: buffer` with the chain's `buffer_type` left at `bambu`. See
     [Extruder](configuration.md#extruder).
 
 !!! Question
