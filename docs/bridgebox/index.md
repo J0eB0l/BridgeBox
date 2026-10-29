@@ -20,9 +20,9 @@ A single BridgeBox runs up to four boxed units (AMS 1 and AMS 2 Pro in any mix) 
 of 24 lanes. That limit comes from how Bambu addresses units on the bus, not from AFC. You can add a second BridgeBox
 to the same printer if you need more lanes or a second extruder.
 
-!!! warning "AMS Lite"
+!!! note "AMS Lite"
 
-    AMS Lite support is still being tested and is not in the current AFC release. See [AMS Lite](ams-lite.md) for how
+    The AMS Lite has no buffer and no dryer, so it runs on a BridgeBox of its own. See [AMS Lite](ams-lite.md) for how
     it works and what is different about it.
 
 ## How it works

@@ -1,10 +1,5 @@
 # AMS Lite
 
-!!! warning "In testing"
-
-    AMS Lite support runs on test hardware but is not in the current AFC release, and the installer does not offer it
-    yet. This page describes how it works so you know what to expect.
-
 The AMS Lite is the four-spool system from the Bambu A1 series. It has no buffer and no dryer, so it is set up
 differently from the boxed units.
 
