@@ -37,11 +37,16 @@ on the bus.
 
 ## Step 2: Run the installer
 
-From within the `AFC-Klipper-Add-On` directory, start the installer:
+From within the `AFC-Klipper-Add-On` directory, start the installer on the BridgeBox branch:
 
 ```bash
-./install-afc.sh
+./install-afc.sh -b BridgeBox
 ```
+
+!!! warning "Keep `-b BridgeBox`"
+
+    Without it, the installer switches the copy to `main`, which has no BridgeBox support. Use it every time you run
+    the installer or `./update-afc.sh`.
 
 === "First unit"
 
@@ -124,7 +129,7 @@ cd ~/AFC-Klipper-Add-On
 git remote add bridgebox https://github.com/J0eB0l/AFC-Klipper-Add-On.git
 git fetch bridgebox BridgeBox
 git checkout -b BridgeBox bridgebox/BridgeBox
-./install-afc.sh
+./install-afc.sh -b BridgeBox
 ```
 
 Your existing units and their config files are kept. Use the additional unit menu (`A`) to add the BridgeBox.
