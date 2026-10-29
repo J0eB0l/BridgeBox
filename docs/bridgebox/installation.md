@@ -134,15 +134,6 @@ git checkout -b BridgeBox bridgebox/BridgeBox
 
 Your existing units and their config files are kept. Use the additional unit menu (`A`) to add the BridgeBox.
 
-The installer leaves an existing `[update_manager afc-software]` section in `moonraker.conf` alone. Point it at the
-BridgeBox branch yourself, so Moonraker's updater follows that branch instead of `main`:
-
-```ini
-[update_manager afc-software]
-origin: https://github.com/J0eB0l/AFC-Klipper-Add-On.git
-primary_branch: BridgeBox
-```
-
 ## Manual installation
 
 If you would rather not use the installer, copy `templates/AFC_BridgeBox.cfg` from the AFC-Klipper-Add-On folder to
