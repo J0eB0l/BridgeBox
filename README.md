@@ -8,6 +8,8 @@ Running on hardware: AMS 1, AMS 2 Pro, AMS HT, and AMS Lite.
 
 The full page: **[j0eb0l.github.io/BridgeBox](https://j0eb0l.github.io/BridgeBox/)**
 
+Setting it up with AFC: **[the BridgeBox documentation](docs/index.md)**
+
 ## Why BridgeBox?
 
 Bambu makes useful AMS hardware, but normally you need a Bambu printer to use it. You can't just plug an AMS into a Klipper machine and expect it to work.
