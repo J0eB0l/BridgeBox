@@ -26,10 +26,11 @@ command prints its usage when run without arguments.
 
 ### AFC_BAMBU_UIDS
 
-Lists the units on the bus, read straight off the wire, and the BridgeBox firmware version.
+Lists the units on the bus, read straight off the wire, and the BridgeBox firmware version. It takes no arguments and
+reads the first chain's BridgeBox.
 
 ```
-AFC_BAMBU_UIDS UNIT=Bambu_AMS_1
+AFC_BAMBU_UIDS
 ```
 
 -----
