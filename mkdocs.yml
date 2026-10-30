@@ -6,7 +6,7 @@
 #           mkdocs serve
 site_name: BridgeBox Documentation
 site_description: "BridgeBox documentation for the AFC-Klipper-Add-On"
-site_url: https://j0eb0l.github.io/BridgeBox/docs/
+site_url: https://bridgebox.dev/docs/
 repo_url: https://github.com/J0eB0l/BridgeBox
 edit_uri: 'blob/main/docs/'
 repo_name: J0eB0l/BridgeBox
