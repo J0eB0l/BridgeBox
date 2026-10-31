@@ -27,7 +27,7 @@
     --bay-2:#4aa73c;
     --bay-3:#e0a406;
     --bay-4:#d8322c;
-    --measure:34rem;
+    --measure:none;
     --display:"Archivo","Helvetica Neue",Arial,sans-serif;
     --body:"Source Serif 4",Georgia,"Times New Roman",serif;
     --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
@@ -95,7 +95,7 @@
     margin:0;
   }
 
-  .wrap{max-width:73rem;margin:0 auto;padding:0 clamp(1.15rem,4vw,3rem)}
+  .wrap{max-width:80rem;margin:0 auto;padding:0 clamp(1.15rem,4vw,3rem)}
   .prose{max-width:var(--measure);display:flex;flex-direction:column;gap:1rem}
   .lede{font-size:1.16rem;line-height:1.55}
 
@@ -196,7 +196,7 @@
 
   /* ── AMS Lite ─────────────────────────────────────── */
   .lite-grid{display:grid;gap:clamp(1.6rem,4vw,3rem);grid-template-columns:1fr;align-items:start;margin-bottom:2.4rem}
-  @media (min-width:940px){.lite-grid{grid-template-columns:minmax(0,1fr) minmax(0,.9fr)}}
+  @media (min-width:940px){.lite-grid:has(> :nth-child(2)){grid-template-columns:minmax(0,1fr) minmax(0,.9fr)}}
   .lite-grid .prose{gap:.9rem}
   .facts{
     margin:0;display:grid;grid-template-columns:minmax(0,10.5rem) minmax(0,1fr);
