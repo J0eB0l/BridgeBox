@@ -155,6 +155,11 @@
   /* ── sections ─────────────────────────────────────── */
   section{padding:clamp(2.6rem,6vw,4.2rem) 0}
   section + section{border-top:1px solid var(--rule-soft)}
+  .maker{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.6rem;margin-bottom:1.8rem;padding:1.2rem 1.5rem;
+    background:var(--deep);border:1px solid var(--deep-rule);border-radius:4px;text-decoration:none;max-width:44rem}
+  .maker-label{color:var(--deep-ink);font-family:var(--display);font-weight:600;font-size:1.05rem;line-height:1.4;flex:1 1 14rem}
+  .maker img{display:block;width:min(15rem,100%);height:auto}
+  .maker:hover{border-color:var(--signal)}
   .band{background:var(--sunken);border-top:1px solid var(--rule-soft);border-bottom:1px solid var(--rule-soft)}
   .head{display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.6rem;max-width:var(--measure)}
 
@@ -691,8 +696,13 @@
         <p class="eyebrow">Credits &amp; links</p>
         <h2>Developed in collaboration with AFC</h2>
       </div>
+      <a class="maker" href="https://pulsar-3d.com/">
+        <span class="maker-label">BridgeBox units are produced and distributed exclusively by</span>
+        <img src="assets/pulsar3d.webp" alt="Pulsar 3D" width="720" height="307" loading="lazy">
+      </a>
       <div class="prose">
         <p>BridgeBox was developed in conjunction with the AFC team to bring Bambu AMS support to Klipper-based printers. While the AFC-Klipper-Add-On project is open source, the BridgeBox transport component is proprietary and licensed exclusively to the AFC project. A big thank you to the AFC team for their collaboration, support, and contributions throughout development.</p>
+        <p>A special thank you to a member of our community who has chosen to remain anonymous. They redesigned the BridgeBox board and its case and refined every detail of both, and the hardware is far better for their skill and generosity.</p>
         <p>Want to learn more about the software behind BridgeBox? Visit the <a href="https://github.com/AFCProject/AFC-Klipper-Add-On">AFC-Klipper-Add-On GitHub repository</a> or the <a href="https://www.afcproject.dev/">AFC documentation</a>.</p>
       </div>
     </div>

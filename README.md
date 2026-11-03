@@ -193,6 +193,12 @@ All features described here have been tested and proven functional. Development 
 
 BridgeBox was developed in conjunction with the AFC team to bring Bambu AMS support to Klipper-based printers. While the AFC-Klipper-Add-On project is open source, the BridgeBox transport component is proprietary and licensed exclusively to the AFC project. A big thank you to the AFC team for their collaboration, support, and contributions throughout development.
 
+BridgeBox units are produced and distributed exclusively by
+
+<a href="https://pulsar-3d.com/"><img src="assets/pulsar3d.webp" alt="Pulsar 3D" width="240"></a>
+
+A special thank you to a member of our community who has chosen to remain anonymous. They redesigned the BridgeBox board and its case and refined every detail of both, and the hardware is far better for their skill and generosity.
+
 - [AFC-Klipper-Add-On on GitHub](https://github.com/AFCProject/AFC-Klipper-Add-On)
 - [AFC documentation](https://www.afcproject.dev/)
 
