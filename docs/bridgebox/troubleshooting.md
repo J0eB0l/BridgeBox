@@ -85,8 +85,8 @@ tells you straight away whether the problem is between Klipper and the BridgeBox
 ??? Answer
 
     The old printer is still reaching for it at its old address. On the old printer, set the chain to
-    `connection: usb` or remove its section, then run `AFC_BRIDGEBOX_RESET_WIFI` on the new printer, or hold the BOOT
-    button for 10 seconds, and set it up again. See [Moving to another printer](connection.md#moving-to-another-printer-or-network).
+    `connection: usb` or remove its section. Then plug the BridgeBox into the new printer over USB, which gives it the
+    new printer's key, or run `AFC_BRIDGEBOX_RESET_WIFI` on the old printer before you move it, and set it up again. See [Moving to another printer](connection.md#moving-to-another-printer-or-network).
 
 !!! Question
 

@@ -136,7 +136,7 @@ One AMS 2 Pro can dry on the bridge's own supply, over the same wire as everythi
 
 ### USB or WiFi, with nothing to type
 
-Plug BridgeBox in over USB and AFC finds it by itself, with no serial port to look up. For WiFi, join the hotspot BridgeBox puts up, pick your network on the page it shows, and Klipper gives it a private key, so there is no key to type. Start it on USB and it moves over to WiFi by itself once it has joined. To move it to another printer, AFC can clear its WiFi, or you can hold its button for ten seconds.
+Plug BridgeBox in over USB and AFC finds it by itself, with no serial port to look up. For WiFi, join the hotspot BridgeBox puts up, pick your network on the page it shows, and Klipper gives it a private key, so there is no key to type. Start it on USB and it moves over to WiFi by itself once it has joined. To move it to another printer, AFC clears its WiFi, or plug it into the new printer over USB.
 
 ### One config section, then swap units freely
 
@@ -159,7 +159,7 @@ Nothing else can share its bus, so boxed units and HTs go on a second BridgeBox.
 | **Addressing** | Boxed units claim 0x00–0x03, HT units 0x80–0x87, at power-up. An AMS Lite has the bus to itself |
 | **If the link drops** | Print pauses after 5 s of silence; a load in progress rides out 12 s |
 | **Enclosure** | 3D-printed enclosure; STL files included |
-| **Updates** | Over USB, or over the air on WiFi. Ships flashed, so an update never needs a button held |
+| **Updates** | Over USB, or over the air on WiFi. Ships flashed |
 | **Reversible** | Nothing on the AMS is modified. Unplug it and it goes back on a Bambu printer |
 
 ## Optional touchscreen display

@@ -50,11 +50,12 @@ BridgeBox talks to Klipper over **USB** or **WiFi**.
 
 BridgeBox is **not** a Klipper `[mcu]`. Never add it to an `[mcu]` section or flash Klipper onto it.
 
-## The BOOT button
+## Clearing its WiFi
 
-Holding the BOOT button for **10 seconds** wipes the BridgeBox's WiFi network and link key and restarts it with its
-setup hotspot. The LED flickers after one second of holding so you know it took. Use this when moving the BridgeBox to
-another printer or network without Klipper. `AFC_BRIDGEBOX_RESET_WIFI` does the same from Klipper.
+To move the BridgeBox to another printer or network, run
+`AFC_BRIDGEBOX_RESET_WIFI` on the printer that set it up. It wipes the BridgeBox's WiFi network and link key and
+restarts it with its setup hotspot. If that printer is gone, plug the BridgeBox into the new printer over USB, which
+gives it the new printer's key. See [Moving to another printer](connection.md#moving-to-another-printer-or-network).
 
 ## The enclosure
 

@@ -98,7 +98,8 @@ then `RESTART`. The chain then takes the next free BridgeBox it finds on USB.
 A BridgeBox remembers its network and the link key of the printer that set it up. Before moving it:
 
 1. On the old printer, run `AFC_BRIDGEBOX_RESET_WIFI`. It wipes the BridgeBox's network and key and brings its
-   hotspot back. You can also hold the BOOT button for 10 seconds, which does the same without Klipper.
+   hotspot back. If the old printer is gone, plug the BridgeBox into the new printer over USB instead, which gives it
+   the new printer's key.
 2. Stop the old printer's chain from reaching for it: set `connection: usb` or remove the section. A chain left on
    `connection: wifi` keeps reconnecting to the board's old address and takes it back from the new printer.
 3. Set it up on the new printer as above.

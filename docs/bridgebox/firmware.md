@@ -1,7 +1,7 @@
 # Firmware Updates
 
 There are two kinds of firmware on a BridgeBox setup: the BridgeBox's own, and each AMS unit's. Both are updated from
-Klipper over the link the BridgeBox already uses, with no buttons to hold and no Bambu printer.
+Klipper over the link the BridgeBox already uses, with no Bambu printer needed.
 
 ## Updating the BridgeBox
 
