@@ -1,7 +1,7 @@
 # Hardware and Wiring
 
 <figure markdown="span">
-  ![The BridgeBox in its case](../assets/images/bridgebox/case.webp){ width="420" loading=lazy }
+  ![The BridgeBox in its case](../assets/images/bridgebox/case-2026-11.webp){ width="420" loading=lazy }
 </figure>
 
 ## Connecting the AMS
@@ -63,7 +63,7 @@ BridgeBox comes in a 3D-printed case. The STL files are included, so you can pri
 colors.
 
 <figure markdown="span">
-  ![A BridgeBox board](../assets/images/bridgebox/board.webp){ width="420" loading=lazy }
+  ![A BridgeBox board](../assets/images/bridgebox/board-2026-11.webp){ width="420" loading=lazy }
 </figure>
 
 ## Toolhead sensor
