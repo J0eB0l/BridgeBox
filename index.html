@@ -653,29 +653,34 @@
           <p><strong>This one is firmware, not hardware.</strong> It is an image you flash onto a BTT Panda Touch or K-Touch — the same board under two names, sold as a Bambu accessory — which turns it into a display for your printer instead. If one is already sitting in a drawer since you stopped using it, that is the whole cost of this.</p>
           <p>It follows every unit on the bridge, all twelve if you have them, one on the screen at a time. The Unit button at the top opens a list of them with each bay's color and material, so you can see the whole chain at a glance and tap the one you want.</p>
           <p><strong>Not only the AMS.</strong> Tick <em>All AFC units</em> in that list and every other unit AFC runs joins it: Box Turtle, Night Owl, Quattro Box, EMU, HTLF, ViViD, Claymore, ACE, ACE 2, OpenAMS, a toolchanger's tools. Each gets the same card, with its lanes, spools and weights, the box temperature and humidity when it reports them, and its buffer when it has one. A lane with an AFC RFID reader, on an ACE 2, an OpenAMS, a ViViD or a Box Turtle, gets Scan Tag too, which reads the tag where the spool sits and fills in the lane. A unit with more than four lanes pages through them four at a time.</p>
-          <p>Every bay tile shows the filament, how full the spool is, its print temperatures and Spoolman spool. Its T# / Runout button sets the tool number and the infinite-runout lane from any lane on the printer, and Scan Tag reads the spool's tag. It dims itself when it has been left alone, and a tap brings it straight back.</p>
+          <p>Every bay tile shows the filament, how full the spool is, its print temperatures and Spoolman spool. Its T# / Runout button sets the tool number and the infinite-runout lane from any lane on the printer, and Scan Tag reads the spool's tag. Tap the spool itself to load, unload or eject it, or reset the lane. It dims itself when it has been left alone, and a tap brings it straight back.</p>
           <p><strong>Heater control on the units that have one.</strong> An AMS 2 Pro, an AMS HT, an Anycubic ACE and an ACE 2 each get a Dryer Menu on their card: pick a temperature and a time, start or stop a cycle, and the card shows it drying and at what temperature. It sends the same commands as AFC's own dryer page and offers only what each unit accepts: up to 65&nbsp;°C on an AMS 2 Pro, 85&nbsp;°C on an HT, the ACE's configured ceiling, and spool rotation where the AMS supports it. Units without a heater show their temperature and humidity only.</p>
           <p>The touchscreen connects over Wi-Fi and doesn't control the filament bus directly. Disconnecting the display won't interrupt a print.</p>
         </div>
         <figure>
-          <svg viewBox="0 0 860 1700" role="img" aria-label="Three screens from the BridgeBox touchscreen. First, the home screen: a status bar with the BridgeBox name, the bridge firmware version, Bridge Online, a Unit button reading Bambu AMS 1, a settings cog and Log Out, and below it one AMS 2 Pro card filling the screen, with its Dryer Menu, a Following status, a buffer gauge, humidity and chamber readouts, and four bay tiles showing tool number, filament, weight with a fill meter, temperatures, Spoolman spool, a T# / Runout button and a Scan Tag button. Second, the Unit list with the All AFC units box ticked: two Bambu units, then an ACE 2, an OpenAMS and a Box Turtle, each row with a chip per lane in its spool color. Third, the ACE 2 card: its own Dryer Menu, its buffer at 10 percent Advancing, humidity and box temperature, two empty lanes and two loaded ones, each loaded lane with a T# / Runout and a Scan Tag button.">
+          <svg viewBox="0 0 860 2280" role="img" aria-label="Four screens from the BridgeBox touchscreen. First, the home screen: a status bar with the BridgeBox name, the bridge firmware version, Online, a Unit button reading AMS 1, a settings cog and Log out, and below it one AMS 2 Pro card with humidity, chamber temperature, status, a buffer gauge and a Dryer Menu button, beside four bay tiles. Each tile shows its tool number and lane, a ring in the spool's color showing how full it is, the filament, weight, temperatures, a Spool ID button, a T# / Runout button and a Scan Tag button; the third is marked In tool. Second, the Units list with All AFC units ticked: an AMS 2 Pro, an AMS HT, a Box Turtle, an ACE 2 drying at 50 C and an OpenAMS, each row with a chip per lane in its spool color. Third, the AMS HT card: one lane of PA6-CF and its dryer controls beside it, temperatures from 50 to 85 C and times from 2 to 12 hours, with Start and Stop. Fourth, the popup a tapped spool opens, with Load, Unload, Eject and Reset lane.">
             <g transform="translate(0,0) scale(1)">
               <rect x="0" y="0" width="860" height="540" rx="16" fill="#1b1f23"></rect>
               <clipPath id="scr1"><rect x="30" y="30" width="800" height="480" rx="4"></rect></clipPath>
-              <image x="30" y="30" width="800" height="480" clip-path="url(#scr1)" href="assets/panel-home.webp"></image>
+              <image x="30" y="30" width="800" height="480" clip-path="url(#scr1)" href="assets/panel-home-156.webp"></image>
             </g>
             <g transform="translate(0,580) scale(1)">
               <rect x="0" y="0" width="860" height="540" rx="16" fill="#1b1f23"></rect>
               <clipPath id="scr2"><rect x="30" y="30" width="800" height="480" rx="4"></rect></clipPath>
-              <image x="30" y="30" width="800" height="480" clip-path="url(#scr2)" href="assets/panel-units.webp"></image>
+              <image x="30" y="30" width="800" height="480" clip-path="url(#scr2)" href="assets/panel-units-156.webp"></image>
             </g>
             <g transform="translate(0,1160) scale(1)">
               <rect x="0" y="0" width="860" height="540" rx="16" fill="#1b1f23"></rect>
               <clipPath id="scr3"><rect x="30" y="30" width="800" height="480" rx="4"></rect></clipPath>
-              <image x="30" y="30" width="800" height="480" clip-path="url(#scr3)" href="assets/panel-ace2.webp"></image>
+              <image x="30" y="30" width="800" height="480" clip-path="url(#scr3)" href="assets/panel-amsht-156.webp"></image>
+            </g>
+            <g transform="translate(0,1740) scale(1)">
+              <rect x="0" y="0" width="860" height="540" rx="16" fill="#1b1f23"></rect>
+              <clipPath id="scr4"><rect x="30" y="30" width="800" height="480" rx="4"></rect></clipPath>
+              <image x="30" y="30" width="800" height="480" clip-path="url(#scr4)" href="assets/panel-popup-156.webp"></image>
             </g>
           </svg>
-          <figcaption>The panel's own screens, rendered from its firmware. One unit fills the screen at a time; the Unit button opens a list of every unit on the bridge, and with All AFC units ticked, every other AFC unit on the printer too, like the ACE 2 at the bottom, with its own Dryer Menu and Scan Tag.</figcaption>
+          <figcaption>The panel's own screens, rendered from its firmware. One unit fills the screen at a time; the Unit button opens a list of every unit on the bridge, and with All AFC units ticked, every other AFC unit on the printer too, like the ACE 2. Units with a heater show their dryer controls, as on the AMS HT. Tap a spool for Load, Unload, Eject and Reset lane.</figcaption>
         </figure>
       </div>
     </div>

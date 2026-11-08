@@ -7,9 +7,9 @@ weight and state, each unit's temperature and humidity, and the dryer controls o
 board under another name, so one left over from a Bambu printer works too.
 
 <figure markdown="span">
-  ![BridgeBox display screens](../assets/images/bridgebox/panel-light.webp){ width="520" loading=lazy }
-  ![BridgeBox display screens](../assets/images/bridgebox/panel-dark.webp){ width="520" loading=lazy }
-  <figcaption>The home screen, the unit list with All AFC units ticked, and an ACE 2 card.</figcaption>
+  ![BridgeBox display screens](../assets/images/bridgebox/panel-light-156.webp#only-light){ width="520" loading=lazy }
+  ![BridgeBox display screens](../assets/images/bridgebox/panel-dark-156.webp#only-dark){ width="520" loading=lazy }
+  <figcaption>The home screen, the unit list with All AFC units ticked, an AMS HT card with its dryer controls, and the popup a tapped spool opens.</figcaption>
 </figure>
 
 !!! note
@@ -23,7 +23,7 @@ board under another name, so one left over from a Bambu printer works too.
   with its bays, then tap a unit to show it.
 - **Every bay.** Each tile shows the filament, how full the spool is, its print temperatures and its Spoolman spool.
   Its **T# / Runout** button sets the tool number and the infinite-runout lane, from any lane on the printer, and
-  **Scan Tag** reads the spool's tag.
+  **Scan Tag** reads the spool's tag. Tap the spool itself to load, unload or eject it, or reset the lane.
 - **All AFC units.** Tick **All AFC units** in the unit list and the printer's other AFC units join it: BoxTurtle,
   NightOwl, QuattroBox, EMU, HTLF, ViViD, ACE, ACE 2, OpenAMS and a toolchanger's tools. Each gets the same card, with
   its buffer when it has one.
