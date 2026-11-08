@@ -34,7 +34,7 @@ theme:
   icon:
     repo: fontawesome/brands/github
   name: material
-  logo: assets/logo.webp
+  logo: assets/logo-cmyw.webp
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
