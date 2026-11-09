@@ -12,9 +12,9 @@ Setting it up with AFC: **[bridgebox.dev/docs](https://bridgebox.dev/docs/)**
 
 ## BridgeBox overview
 
-[![Play the BridgeBox video: the case and its ports, how to hook it up, and how AFC drives the AMS through it](assets/readme/video-poster-2026-11.webp)](https://bridgebox.dev/#video)
+[![Play the BridgeBox video: the case and its ports, how to hook it up, how AFC drives the AMS through it, drying, and the optional touchscreen](assets/readme/video-poster-2026-11.webp)](https://bridgebox.dev/#video)
 
-<sub>Plays on bridgebox.dev. Or [download the MP4](assets/video/bridgebox-tour-2026-11.mp4) (13 MB).</sub>
+<sub>Plays on bridgebox.dev. Or [download the MP4](assets/video/bridgebox-overview-2026-11-09.mp4) (17 MB).</sub>
 
 ## Why BridgeBox?
 
