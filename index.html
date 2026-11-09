@@ -160,6 +160,9 @@
   .maker-label{color:var(--deep-ink);font-family:var(--display);font-weight:600;font-size:1.05rem;line-height:1.4;flex:1 1 14rem}
   .maker img{display:block;width:min(15rem,100%);height:auto}
   .maker:hover{border-color:var(--signal)}
+  /* ── video ───────────────────────────────────────── */
+  .video-frame{background:#000;border:1px solid var(--deep-rule);border-radius:4px;overflow:hidden;aspect-ratio:16/9}
+  .video-frame video{display:block;width:100%;height:100%}
   .band{background:var(--sunken);border-top:1px solid var(--rule-soft);border-bottom:1px solid var(--rule-soft)}
   .head{display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.6rem;max-width:var(--measure)}
 
@@ -273,6 +276,21 @@
 </header>
 
 <main>
+  <section id="video">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Watch</p>
+        <h2>BridgeBox in 70 seconds</h2>
+      </div>
+      <div class="video-frame">
+        <video controls preload="none" playsinline width="1920" height="1080" poster="assets/video/bridgebox-tour-2026-11.webp" aria-label="BridgeBox tour: the case and its ports, how to hook it up to a Klipper host and a Bambu AMS, and how AFC drives the AMS through it">
+          <source src="assets/video/bridgebox-tour-2026-11.mp4" type="video/mp4">
+          <a href="assets/video/bridgebox-tour-2026-11.mp4">Download the BridgeBox video (MP4)</a>
+        </video>
+      </div>
+    </div>
+  </section>
+
   <section>
     <div class="wrap">
       <div class="head">

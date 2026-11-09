@@ -10,6 +10,12 @@ The full page: **[bridgebox.dev](https://bridgebox.dev/)**
 
 Setting it up with AFC: **[bridgebox.dev/docs](https://bridgebox.dev/docs/)**
 
+## BridgeBox in 70 seconds
+
+[![Play the BridgeBox video: the case and its ports, how to hook it up, and how AFC drives the AMS through it](assets/readme/video-poster-2026-11.webp)](https://bridgebox.dev/#video)
+
+<sub>Plays on bridgebox.dev. Or [download the MP4](assets/video/bridgebox-tour-2026-11.mp4) (13 MB).</sub>
+
 ## Why BridgeBox?
 
 Bambu makes useful AMS hardware, but normally you need a Bambu printer to use it. You can't just plug an AMS into a Klipper machine and expect it to work.
