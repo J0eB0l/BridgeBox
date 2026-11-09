@@ -10,7 +10,7 @@ The full page: **[bridgebox.dev](https://bridgebox.dev/)**
 
 Setting it up with AFC: **[bridgebox.dev/docs](https://bridgebox.dev/docs/)**
 
-## BridgeBox in 70 seconds
+## BridgeBox overview
 
 [![Play the BridgeBox video: the case and its ports, how to hook it up, and how AFC drives the AMS through it](assets/readme/video-poster-2026-11.webp)](https://bridgebox.dev/#video)
 
