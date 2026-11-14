@@ -35,6 +35,7 @@ theme:
     repo: fontawesome/brands/github
   name: material
   logo: assets/logo-cmyw.webp
+  favicon: assets/favicon-bb-128.png
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
