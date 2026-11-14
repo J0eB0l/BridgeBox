@@ -24,6 +24,7 @@ nav:
       - Spools, RFID and Spoolman: bridgebox/spools.md
       - Drying: bridgebox/drying.md
       - AMS Lite: bridgebox/ams-lite.md
+      - ACE RFID: bridgebox/ace-rfid.md
       - Firmware Updates: bridgebox/firmware.md
       - Touchscreen Display: bridgebox/display.md
       - Klipper Commands: bridgebox/commands.md
