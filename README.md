@@ -1,4 +1,4 @@
-<p align="center"><img alt="BridgeBox, powered by AFC. Use your Bambu AMS with Klipper. The closed BridgeBox case beside its board." src="assets/readme/hero-dark-cmyw.webp" width="100%"></p>
+<p align="center"><img alt="BridgeBox, powered by AFC. Use your Bambu AMS with Klipper. The closed BridgeBox case beside its board." src="assets/readme/hero-dark-led.webp" width="100%"></p>
 
 # BridgeBox
 
@@ -14,7 +14,7 @@ Setting it up with AFC: **[bridgebox.dev/docs](https://bridgebox.dev/docs/)**
 
 [![Play the BridgeBox video: the case and its ports, how to hook it up, how AFC drives the AMS through it, drying, and the optional touchscreen](assets/readme/video-poster-2026-11-10.webp)](https://bridgebox.dev/#video)
 
-<sub>Plays on bridgebox.dev. Or [download the MP4](assets/video/bridgebox-overview-2026-11-10.mp4) (18 MB).</sub>
+<sub>Plays on bridgebox.dev. Or [download the MP4](assets/video/bridgebox-overview-2026-11-15.mp4) (18 MB).</sub>
 
 ## Why BridgeBox?
 
