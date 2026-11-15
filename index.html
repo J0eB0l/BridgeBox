@@ -319,7 +319,7 @@
       </div>
       <figure>
         <div class="fig-scroll">
-          <svg viewBox="0 0 880 506" role="img" aria-label="Three wiring paths compared. With a Bambu printer, the printer drives the RS-485 bus to the filament buffer and on to the AMS. With BridgeBox, a Klipper host connects over USB or WiFi to BridgeBox, which drives the same RS-485 bus to the same unmodified buffer and AMS. An AMS Lite has no buffer, so BridgeBox is wired straight to it, in the place of the A1's cable.">
+          <svg viewBox="0 0 880 506" role="img" aria-label="Three wiring paths compared. With a Bambu printer, the printer drives the bus to the filament buffer and on to the AMS. With BridgeBox, a Klipper host connects over USB or WiFi to BridgeBox, which drives the same bus to the same unmodified buffer and AMS. An AMS Lite has no buffer, so BridgeBox is wired straight to it, in the place of the A1's cable.">
             <defs>
               <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
                 <path d="M0 0 L10 5 L0 10 z" fill="currentColor"></path>
@@ -336,7 +336,7 @@
             <text x="88" y="80" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">bus master</text>
 
             <line x1="176" y1="65" x2="392" y2="65" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)"></line>
-            <text x="284" y="56" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">RS-485 · 4-pin</text>
+            <text x="284" y="56" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">4-pin</text>
 
             <rect x="400" y="34" width="104" height="62" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
             <text x="452" y="63" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="700" fill="currentColor">Buffer</text>
@@ -371,7 +371,7 @@
             <text x="251" y="248" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--signal)">bus master</text>
 
             <line x1="326" y1="233" x2="392" y2="233" stroke="var(--signal)" stroke-width="1.5" marker-end="url(#ahs)"></line>
-            <text x="359" y="224" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--signal)">RS-485</text>
+            <text x="359" y="224" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--signal)">bus</text>
 
             <rect x="400" y="202" width="104" height="62" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
             <text x="452" y="231" text-anchor="middle" font-family="Archivo, sans-serif" font-size="13" font-weight="700" fill="currentColor">Buffer</text>
@@ -409,7 +409,7 @@
             <text x="251" y="448" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--signal)">bus master</text>
 
             <line x1="326" y1="433" x2="592" y2="433" stroke="var(--signal)" stroke-width="1.5" marker-end="url(#ahs)"></line>
-            <text x="359" y="424" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--signal)">RS-485</text>
+            <text x="359" y="424" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--signal)">bus</text>
 
             <rect x="400" y="410" width="104" height="46" rx="4" fill="var(--sunken)" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 4"></rect>
             <text x="452" y="437" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">no buffer</text>
@@ -504,7 +504,7 @@
             <tr><th>Temperature / humidity</th><td>Model-dependent reporting</td><td>Temperature and humidity reporting</td><td>Temperature and humidity reporting</td><td>No built-in humidity sensor</td></tr>
             <tr><th>Remaining filament</th><td>Estimate on supported tagged spools</td><td>Estimate on supported tagged spools</td><td>Estimate on supported tagged spools</td><td>Uses Spoolman or manually set weight</td></tr>
             <tr><th>Load / unload</th><td>Controlled through AFC</td><td>Controlled through AFC</td><td>Controlled through AFC</td><td>Controlled through AFC; parks filament clear of splitter</td></tr>
-            <tr><th>Path management</th><td>AFC configuration and sensors</td><td>AFC configuration and sensors</td><td>AFC configuration and sensors</td><td>Learns path on first load via odometer</td></tr>
+            <tr><th>Path management</th><td>AFC configuration and sensors</td><td>AFC configuration and sensors</td><td>AFC configuration and sensors</td><td>Learns its path on the first load</td></tr>
             <tr><th>Overfeed protection</th><td>AFC loading limits and sensor checks</td><td>AFC loading limits and sensor checks</td><td>AFC loading limits and sensor checks</td><td>Stops 250 mm past learned path</td></tr>
             <tr><th>Jam handling</th><td>AFC detects and handles failed loads</td><td>AFC detects and handles failed loads</td><td>AFC detects and handles failed loads</td><td>AMS Lite stall reporting and AFC handling</td></tr>
             <tr><th>Filament grip / clogs</th><td>Printer/AFC sensor configuration</td><td>Printer/AFC sensor configuration</td><td>Printer/AFC sensor configuration</td><td>Odometer checks movement and can trigger AFC pause</td></tr>
@@ -526,8 +526,7 @@
           <p class="lede">The AMS Lite is the four-spool system used with the Bambu A1 series. Since it doesn't have a buffer or built-in dryer, its setup is different from the enclosed AMS models.</p>
           <p><strong>It has its BridgeBox to itself.</strong> BridgeBox goes on the AMS Lite's cable in the A1's place. Nothing else can share that bus, and AFC refuses a setup that tries, so boxed units and HTs go on a second BridgeBox on the same printer.</p>
           <p><strong>A toolhead sensor is optional.</strong> A boxed AMS feels the filament arrive at its buffer. An AMS Lite has nothing like that, so it feeds until the filament reaches the toolhead, then lets go and the extruder pulls, the same way an A1 runs it. Its four tubes meet at a splitter at the toolhead. A filament switch after the splitter, before the extruder gears, ends every load for all four trays, and on a Snapmaker U1 the U1's own sensor counts. Without one, the AMS Lite's own odometer ends the load: when the tip reaches the extruder gears it stops moving, and the feed stops there.</p>
-          <p><strong>It learns its own path.</strong> On the first load it measures the run from the AMS Lite to the sensor, or to the gears, with its odometer and keeps that figure. After that, a load that feeds 250&nbsp;mm past it without arriving is stopped, instead of pushing filament somewhere it shouldn't go. A feed that stops well short of it isn't taken as arrived. BridgeBox waits for the AMS Lite's own stall report and only then fails the load as a jam, so a brief hesitation never stops a print.</p>
-          <p><strong>The odometer keeps watch.</strong> The AMS Lite counts the filament leaving each tray in 1.5&nbsp;mm steps, even with its motor off. Once a load ends, the extruder takes over, and the count has to move with it. That proves the gears have hold of the filament; if the count stands still, the load fails instead of printing into the air. While printing, an extruder that keeps pushing while the count stands still means a clog, and AFC pauses the print. The AMS Lite reports a stuck or tangled spool itself, and BridgeBox stops the load and names the tray.</p>
+          <p><strong>It watches every load.</strong> A load that overshoots or stops short is stopped instead of pushing filament somewhere it shouldn&rsquo;t go. If the extruder doesn&rsquo;t take hold, the load fails instead of printing into the air, and a clog while printing pauses the print. A stuck or tangled spool stops the load and names the tray.</p>
           <p><strong>Tags work as on the other units.</strong> When a spool goes in, BridgeBox asks the AMS Lite to read its tag, the way an A1 does. A Bambu tag brings the material, color, temperatures and spool weight, along with the tag's own UID and the reel's UUID, so Spoolman links the spool and finds it again in any tray. An untagged spool loads and prints the same; you set the lane.</p>
           <p><strong>It doesn't measure what's left.</strong> A boxed AMS can turn a tagged spool to measure it. The AMS Lite can't, and it doesn't on an A1 either, so its lanes keep the weight Spoolman or you set.</p>
           <p><strong>Unloads stop short.</strong> Its spring-loaded holders take back only a little filament, so it never reels the tube home. With a sensor, it pulls back until the sensor clears, then 30&nbsp;mm more (set that to clear your splitter). Without one, it pulls back a set distance, counted on the odometer. Either way it parks there, out of the other trays' way and ready for its next load. To take a spool out, eject the lane: the AMS Lite lets go and you pull the filament out by hand.</p>
@@ -648,7 +647,6 @@
             <tr><th>Works with</th><td>Bambu Lab AMS 1 · AMS 2 Pro · AMS HT · AMS Lite, all stock and unmodified</td></tr>
             <tr><th>How many</th><td>4 boxed units + 8 HT per BridgeBox, 24 bays (Bambu's limit, not ours), or one AMS Lite on its own. A printer can run more than one BridgeBox</td></tr>
             <tr><th>Connects at</th><td>The filament buffer's 4-pin socket, the printer's own plug. On an AMS Lite, its cable in the A1's place</td></tr>
-            <tr><th>Bus</th><td>RS-485, half-duplex, 1,228,800 baud</td></tr>
             <tr><th>Link to the printer</th><td>USB or WiFi, plain text. Found by itself on USB; WiFi set up from its own hotspot, with no key to type. The host never touches the bus</td></tr>
             <tr><th>Power</th><td>24 V, 2–4 A adapter (not included). 2 A fuse on the board. Same barrel as an AMS 2 Pro's. One AMS 2 Pro may dry on it; other dryers need their own supply</td></tr>
             <tr><th>Addressing</th><td>Boxed units claim 0x00–0x03, HT units 0x80–0x87, at power-up. An AMS Lite has the bus to itself</td></tr>
