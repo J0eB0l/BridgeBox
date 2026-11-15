@@ -30,7 +30,7 @@ BridgeBox plugs into the four-pin connector on the filament buffer, where a Bamb
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/readme/wiring-dark.webp">
-  <img alt="Three wiring paths compared. With a Bambu printer, the printer drives the bus to the filament buffer and on to the AMS. With BridgeBox, a Klipper host connects over USB or WiFi to BridgeBox, which drives the same bus to the same unmodified buffer and AMS. An AMS Lite has no buffer, so BridgeBox is wired straight to it, in the place of the A1&#x27;s cable." src="assets/readme/wiring-light.webp" width="100%">
+  <img alt="Three wiring paths compared. With a Bambu printer, the printer drives the RS-485 bus to the filament buffer and on to the AMS. With BridgeBox, a Klipper host connects over USB or WiFi to BridgeBox, which drives the same RS-485 bus to the same unmodified buffer and AMS. An AMS Lite has no buffer, so BridgeBox is wired straight to it, in the place of the A1&#x27;s cable." src="assets/readme/wiring-light.webp" width="100%">
 </picture>
 
 <sub>BridgeBox uses the AMS's existing connections and firmware. The standard AMS keeps its original buffer and cables. The AMS Lite connects directly because it doesn't have a buffer.</sub>
@@ -93,7 +93,7 @@ All four models work with BridgeBox and AFC. The differences below come from eac
 | Temperature / humidity | Model-dependent reporting | Temperature and humidity reporting | Temperature and humidity reporting | No built-in humidity sensor |
 | Remaining filament | Estimate on supported tagged spools | Estimate on supported tagged spools | Estimate on supported tagged spools | Uses Spoolman or manually set weight |
 | Load / unload | Controlled through AFC | Controlled through AFC | Controlled through AFC | Controlled through AFC; parks filament clear of splitter |
-| Path management | AFC configuration and sensors | AFC configuration and sensors | AFC configuration and sensors | Learns its path on the first load |
+| Path management | AFC configuration and sensors | AFC configuration and sensors | AFC configuration and sensors | Learns path on first load via odometer |
 | Overfeed protection | AFC loading limits and sensor checks | AFC loading limits and sensor checks | AFC loading limits and sensor checks | Stops 250 mm past learned path |
 | Jam handling | AFC detects and handles failed loads | AFC detects and handles failed loads | AFC detects and handles failed loads | AMS Lite stall reporting and AFC handling |
 | Filament grip / clogs | Printer/AFC sensor configuration | Printer/AFC sensor configuration | Printer/AFC sensor configuration | Odometer checks movement and can trigger AFC pause |
@@ -107,7 +107,9 @@ The AMS Lite is the four-spool system used with the Bambu A1 series. Since it do
 
 **A toolhead sensor is optional.** A boxed AMS feels the filament arrive at its buffer. An AMS Lite has nothing like that, so it feeds until the filament reaches the toolhead, then lets go and the extruder pulls, the same way an A1 runs it. Its four tubes meet at a splitter at the toolhead. A filament switch after the splitter, before the extruder gears, ends every load for all four trays, and on a Snapmaker U1 the U1's own sensor counts. Without one, the AMS Lite's own odometer ends the load: when the tip reaches the extruder gears it stops moving, and the feed stops there.
 
-**It watches every load.** A load that overshoots or stops short is stopped instead of pushing filament somewhere it shouldn't go. If the extruder doesn't take hold, the load fails instead of printing into the air, and a clog while printing pauses the print. A stuck or tangled spool stops the load and names the tray.
+**It learns its own path.** On the first load it measures the run from the AMS Lite to the sensor, or to the gears, with its odometer and keeps that figure. After that, a load that runs well past it without arriving is stopped, instead of pushing filament somewhere it shouldn't go. A feed that stops well short of it isn't taken as arrived. BridgeBox waits for the AMS Lite's own stall report and only then fails the load as a jam, so a brief hesitation never stops a print.
+
+**The odometer keeps watch.** The AMS Lite counts the filament leaving each tray, even with its motor off. Once a load ends, the extruder takes over, and the count has to move with it. That proves the gears have hold of the filament; if the count stands still, the load fails instead of printing into the air. While printing, an extruder that keeps pushing while the count stands still means a clog, and AFC pauses the print. The AMS Lite reports a stuck or tangled spool itself, and BridgeBox stops the load and names the tray.
 
 **Tags work as on the other units.** When a spool goes in, BridgeBox asks the AMS Lite to read its tag, the way an A1 does. A Bambu tag brings the material, color, temperatures and spool weight, along with the tag's own UID and the reel's UUID, so Spoolman links the spool and finds it again in any tray. An untagged spool loads and prints the same; you set the lane.
 

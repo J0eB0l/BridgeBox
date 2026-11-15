@@ -28,12 +28,23 @@ The AMS Lite's four tubes meet at a splitter at the toolhead.
     The AMS Lite's own odometer ends the load: when the tip reaches the extruder gears it stops moving, and the feed
     stops there. Then the AMS Lite lets go and the extruder pulls, the same way an A1 runs it.
 
-### It watches every load
+### It learns its own path
 
-- a load that overshoots or stops short is stopped instead of pushing filament somewhere it shouldn't go;
-- if the extruder doesn't take hold, the load fails instead of printing into the air;
-- a clog while printing pauses the print;
-- a stuck or tangled spool stops the load and names the tray.
+On the first load, the AMS Lite measures the run to the sensor, or to the gears, with its odometer and keeps that
+figure. After that:
+
+- a load that runs well past it without arriving is stopped, instead of pushing filament somewhere it shouldn't go;
+- a feed that stops well short of it isn't taken as arrived;
+- a jam only fails the load once the AMS Lite reports a stall itself, so a brief hesitation never stops a print.
+
+## The odometer keeps watch
+
+The AMS Lite counts the filament leaving each tray, even with its motor off.
+
+- Once a load ends, the count has to move with the extruder. That proves the gears have hold of the filament; if the
+  count stands still, the load fails instead of printing into the air.
+- While printing, an extruder that keeps pushing while the count stands still means a clog, and AFC pauses the print.
+- The AMS Lite reports a stuck or tangled spool itself. BridgeBox stops the load and names the tray.
 
 ## Unloading
 

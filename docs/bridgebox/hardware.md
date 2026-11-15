@@ -14,6 +14,11 @@ the printer's cable from the buffer and plug the BridgeBox cable in its place.
 - **AMS Lite:** it has no buffer. BridgeBox goes on the AMS Lite's own cable, in the place of the A1, and nothing else
   can share that bus. See [AMS Lite](ams-lite.md).
 
+!!! note
+
+    The bus between the BridgeBox and the AMS units is RS-485, the same as on a Bambu printer. Klipper
+    never touches the bus; it only talks to the BridgeBox.
+
 ## Power
 
 The AMS units were powered by the Bambu printer. On a BridgeBox they are powered by the BridgeBox, which needs its own
