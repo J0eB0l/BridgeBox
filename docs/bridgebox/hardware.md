@@ -16,7 +16,7 @@ the printer's cable from the buffer and plug the BridgeBox cable in its place.
 
 !!! note
 
-    The bus between the BridgeBox and the AMS units is RS-485, the same as on a Bambu printer. Klipper
+    The bus between the BridgeBox and the AMS units is RS-485 at 1,228,800 baud, the same as on a Bambu printer. Klipper
     never touches the bus; it only talks to the BridgeBox.
 
 ## Power
