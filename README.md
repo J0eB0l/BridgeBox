@@ -104,7 +104,7 @@ All four models work with BridgeBox and AFC. The differences below come from eac
 | Jam handling | AFC detects and handles failed loads | AFC detects and handles failed loads | AFC detects and handles failed loads | AMS Lite stall reporting and AFC handling |
 | Filament grip / clogs | Printer/AFC sensor configuration | Printer/AFC sensor configuration | Printer/AFC sensor configuration | Odometer checks movement and can trigger AFC pause |
 | Stuck spool | AMS errors handled by AFC | AMS errors handled by AFC | AMS errors handled by AFC | AMS Lite reports stuck/tangled spool |
-| Firmware updates | In the menu; not tested yet | Bambu's firmware, from the printer or the display | Bambu's firmware, from the printer or the display | Not through BridgeBox |
+| Firmware updates | Bambu's firmware, from the printer or the display | Bambu's firmware, from the printer or the display | Bambu's firmware, from the printer or the display | Not through BridgeBox |
 
 ## AMS Lite support
 

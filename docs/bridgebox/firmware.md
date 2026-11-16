@@ -91,9 +91,6 @@ the unit and the version from a menu, the image comes straight from Bambu, and K
 Why update: an AMS 2 Pro only loads a tray while its dryer runs once it has Bambu's newer AMS firmware, and an AMS HT on
 05.00.22.19 keeps heating while printing with a lane loaded.
 
-The AMS 2 Pro and AMS HT updates are tested. The AMS 1 is in the menu too, but its update has not been tried on a unit
-yet.
-
 ### One-time setup
 
 The updater runs beside Klipper. Follow `firmwares/Bambu_AMS/AMS_FLASH_HOWTO.md` in the AFC-Klipper-Add-On folder. In
