@@ -120,7 +120,7 @@ first: [Updating the AMS units](firmware.md#updating-the-ams-units) says how.
 
 === "Version"
 
-    ![The versions for an AMS 2 Pro: 05.00.22.22, the newest, and 04.00.21.87, installed](../assets/images/bridgebox/flash-ams-versions.webp){ width="520" loading=lazy }
+    ![The versions for an AMS 2 Pro: 05.00.22.22, the newest, 05.00.22.19, and 04.00.21.87, installed, from a file beside the updater](../assets/images/bridgebox/flash-ams-versions.webp){ width="520" loading=lazy }
 
     The newest two from Bambu for that model, and any image you put beside the updater on the printer. The one the
     unit runs is marked Installed.
