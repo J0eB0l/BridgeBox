@@ -102,8 +102,8 @@ If a new version fails to start, the panel goes back to the version it was runni
 
 ## Flash AMS
 
-The panel can update an AMS 2 Pro or AMS HT to Bambu's firmware, through the AMS updater on the printer. Set that up
-first: [Updating the AMS units](firmware.md#updating-the-ams-units) says how.
+The panel can update an AMS 1, AMS 2 Pro or AMS HT to Bambu's firmware, through the AMS updater on the printer. Set
+that up first: [Updating the AMS units](firmware.md#updating-the-ams-units) says how.
 
 === "Open it"
 
