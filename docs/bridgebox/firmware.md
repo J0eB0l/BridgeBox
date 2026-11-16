@@ -93,11 +93,42 @@ Why update: an AMS 2 Pro only loads a tray while its dryer runs once it has Bamb
 
 ### One-time setup
 
-The updater runs beside Klipper. Follow `firmwares/Bambu_AMS/AMS_FLASH_HOWTO.md` in the AFC-Klipper-Add-On folder. In
-short: copy `ams_flash.py`, `ams_flash.cfg` and `ams_firmware.json` into `~/printer_data/config/ams_firmware/`, put the
-full path to `ams_flash.py` on the `command:` line of `ams_flash.cfg`, add `[include ams_firmware/ams_flash.cfg]` to
-`printer.cfg`, then `FIRMWARE_RESTART`. Klipper needs the `gcode_shell_command` extra (Kalico has it built in), and
-`sudo loginctl enable-linger $USER`, run once, lets an update outlive a Klipper restart.
+The updater is a script that runs beside Klipper. Set it up once:
+
+1. **Check for `gcode_shell_command`.** Kalico has it built in. On Klipper, install the `gcode_shell_command` extra,
+   as KIAUH does.
+2. **Copy the updater into your config:**
+
+    ```bash
+    mkdir -p ~/printer_data/config/ams_firmware
+    cd ~/AFC-Klipper-Add-On/firmwares/Bambu_AMS
+    cp ams_flash.py ams_flash.cfg ams_firmware.json ~/printer_data/config/ams_firmware/
+    ```
+
+3. **Check the path in `ams_flash.cfg`.** Its `command:` line must hold the full path to `ams_flash.py`, because
+   Klipper does not expand `~`. It is set for the user `pi`:
+
+    ```ini
+    command: /usr/bin/python3 /home/pi/printer_data/config/ams_firmware/ams_flash.py
+    ```
+
+    If your user is not `pi`, change `/home/pi` to your home folder. `echo $HOME` prints it.
+
+4. **Include it** by adding this line to `printer.cfg`:
+
+    ```ini
+    [include ams_firmware/ams_flash.cfg]
+    ```
+
+5. **Let an update outlive a Klipper restart.** Run this once:
+
+    ```bash
+    sudo loginctl enable-linger $USER
+    ```
+
+6. **Restart Klipper** with `FIRMWARE_RESTART`.
+
+The full guide is `firmwares/Bambu_AMS/AMS_FLASH_HOWTO.md` in the AFC-Klipper-Add-On folder.
 
 ### Update a unit
 
