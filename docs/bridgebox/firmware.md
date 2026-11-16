@@ -10,7 +10,7 @@ BridgeBox is on.
 
 ### What you need
 
-Two files, which always travel together. Both are in `Firmwares/BridgeBox/` in the AFC-Klipper-Add-On folder:
+Two files, which always travel together. Both are in `firmwares/BridgeBox/` in the AFC-Klipper-Add-On folder:
 
 | Image | Manifest |
 |-------|----------|
@@ -18,7 +18,7 @@ Two files, which always travel together. Both are in `Firmwares/BridgeBox/` in t
 
 The BridgeBox runs only signed images, and the manifest is the signature. Without it, the BridgeBox refuses the update.
 
-`Firmwares/BridgeBox/bridgebox_flash.cfg` adds three short commands for the update. Upload it to your config folder and
+`firmwares/BridgeBox/bridgebox_flash.cfg` adds three short commands for the update. Upload it to your config folder and
 add `[include bridgebox_flash.cfg]` to `printer.cfg`, then `RESTART`:
 
 | Command | Does |
@@ -85,37 +85,60 @@ one keeps running until the new one has been checked.
 
 ## Updating the AMS units
 
-The AMS units' own firmware can be updated over the bus from Klipper, with no Bambu printer. There is one command per
-model, and each only sends its own model's file:
+Each AMS unit's own firmware is updated through the BridgeBox too: no Bambu printer and no cable to the AMS. You pick
+the unit and the version from a menu, the image comes straight from Bambu, and Klipper keeps running.
 
-| Model | Command | File |
-|-------|---------|------|
-| AMS 2 Pro | `AFC_BAMBU_AMS_UPDATE` | `ams2_artifact.json` |
-| AMS HT | `AFC_BAMBU_HT_UPDATE` | `ht_artifact.json` |
-| AMS 1 | `AFC_BAMBU_AMS_ONE_UPDATE` | not available yet |
+Why update: an AMS 2 Pro only loads a tray while its dryer runs once it has Bambu's newer AMS firmware, and an AMS HT on
+05.00.22.19 keeps heating while printing with a lane loaded.
 
-Why update: an AMS 2 Pro only loads a tray while its dryer runs once it has Bambu's updated firmware, and an AMS HT on
-older firmware refuses to dry with a lane loaded.
+The AMS 2 Pro and AMS HT updates are tested. The AMS 1 is in the menu too, but its update has not been tried on a unit
+yet.
 
-!!! danger "One unit at a time"
+### One-time setup
 
-    Only the unit being updated may be connected to the BridgeBox. Unplug every other AMS first. The command checks
-    this in Klipper and again on the bus, and refuses if it finds a second unit.
+The updater runs beside Klipper. Follow `firmwares/Bambu_AMS/AMS_FLASH_HOWTO.md` in the AFC-Klipper-Add-On folder. In
+short: copy `ams_flash.py`, `ams_flash.cfg` and `ams_firmware.json` into `~/printer_data/config/ams_firmware/`, put the
+full path to `ams_flash.py` on the `command:` line of `ams_flash.cfg`, add `[include ams_firmware/ams_flash.cfg]` to
+`printer.cfg`, then `FIRMWARE_RESTART`. Klipper needs the `gcode_shell_command` extra (Kalico has it built in), and
+`sudo loginctl enable-linger $USER`, run once, lets an update outlive a Klipper restart.
 
-The update needs a one-time setup (Klipper's `gcode_shell_command` and the updater files). Follow
-`Firmwares/Bambu_AMS/AMS_FLASH_HOWTO.md` in the AFC-Klipper-Add-On folder. In short:
+### Update a unit
 
-1. Connect only that unit and wait until it shows online.
-2. `AFC_BAMBU_AMS_UPDATE MODE=check` runs read-only checks and ends with `READ-ONLY CHECKS PASSED`.
-3. `AFC_BAMBU_AMS_UPDATE MODE=go` stops Klipper, rewrites the unit's firmware and restarts Klipper. It takes a few
-   minutes; follow it in `~/printer_data/logs/ams_flash.log`. Success is
-   `FLASH CONFIRMED: the loader verified the image and reset into the new firmware.`
-4. Reconnect your other units and restart Klipper.
+Open the menu one of three ways:
 
-!!! warning
+- on the [BridgeBox display](display.md#flash-ams): **Settings > Flash AMS**
+- on the display's update page: the **AMS** card
+- in the console: `AFC_BAMBU_FIRMWARE`
 
-    If an update stops partway, the unit waits in its bootloader. **Do not power it off.** Run the same `MODE=go`
-    command again and it picks the unit up from there.
+1. **Pick the unit.** Each one shows the firmware it runs and whether a newer one is out.
+2. **Pick the version.** The menu lists the newest two from Bambu for that model, and any image you put in the
+   folder yourself.
+3. **Confirm.** The update takes a few minutes. The units on that BridgeBox read offline until it is done; the
+   other units can stay connected. At the end a popup says how it went, for example
+   `Bambu_AMS_1 now runs 05.00.22.22 (was 04.00.21.87).`, and the unit comes back online on its new firmware.
+
+It refuses while a print is running or paused, and while a unit on the same BridgeBox is drying. The whole run is
+logged in `~/printer_data/logs/ams_flash.log`. Without the menu:
+
+```
+AFC_BAMBU_FIRMWARE UNIT=Bambu_AMS_1 VERSION=05.00.22.22 CONFIRM=1
+```
+
+!!! tip "Offered updates"
+
+    The first time the BridgeBox sees a unit, AFC reads its firmware. If a newer one is out, a popup offers it:
+    **Update to ...** or **Not now**. Each unit is asked once, and again after `AFC_BRIDGEBOX_FORGET`. During a print
+    the popup waits until the print ends.
+
+!!! note "Without internet"
+
+    Put Bambu's image (`n3f_rev5-firmware-v05.00.22.22-..._product.bin.sig`) or a Bambu printer's offline update
+    package (`offline-ota-....zip`) in the folder beside `ams_flash.py`. The menu lists it with the others.
+
+!!! warning "If an update stops partway"
+
+    The unit waits in its bootloader. It is not bricked, but **keep it powered**: it has no firmware to boot until an
+    update completes. Open the menu again and press **Finish** for that unit.
 
 ## Updating the display
 

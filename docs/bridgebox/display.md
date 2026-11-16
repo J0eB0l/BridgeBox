@@ -29,10 +29,11 @@ board under another name, so one left over from a Bambu printer works too.
   its buffer when it has one.
 - **Dryer Menu.** An AMS 2 Pro, AMS HT, ACE or ACE 2 card has a Dryer Menu: pick a temperature and time, then start or
   stop a cycle. It only offers what each unit accepts.
+- **Flash AMS.** Updates an AMS unit to Bambu's firmware from the panel: see [Flash AMS](#flash-ams).
 
 ## The files
 
-Both are in `Firmwares/BridgeBox_Display/` in the AFC-Klipper-Add-On folder.
+Both are in `firmwares/BridgeBox_Display/` in the AFC-Klipper-Add-On folder.
 
 | File | Flash at | Keeps saved WiFi and printer | Use it for |
 |------|----------|------------------------------|------------|
@@ -90,10 +91,62 @@ Both ways keep the saved network and printer.
 === "Over USB"
 
     ```bash
-    esptool.py -p /dev/ttyUSB0 -b 460800 write_flash 0x10000 bridgebox-update-app-0x10000.bin
+    esptool.py -p /dev/ttyUSB0 -b 460800 --after no_reset write_flash 0x10000 bridgebox-update-app-0x10000.bin
+    esptool.py -p /dev/ttyUSB0 erase_region 0xe000 0x2000
     ```
 
+    The second command makes the panel start the image just written. After a browser update it may be running from
+    its other slot, and without it the USB update would change nothing.
+
 If a new version fails to start, the panel goes back to the version it was running.
+
+## Flash AMS
+
+The panel can update an AMS 2 Pro or AMS HT to Bambu's firmware, through the AMS updater on the printer. Set that up
+first: [Updating the AMS units](firmware.md#updating-the-ams-units) says how.
+
+=== "Open it"
+
+    ![The Settings sheet, with Flash AMS under AMS firmware](../assets/images/bridgebox/flash-ams-settings.webp){ width="520" loading=lazy }
+
+    Open **Settings** (the cog in the top bar) and press **Flash AMS**.
+
+=== "Unit"
+
+    ![The Flash AMS list: each unit with its model, its firmware and a chip](../assets/images/bridgebox/flash-ams-units.webp){ width="520" loading=lazy }
+
+    Each unit shows its model and the firmware it runs. The chip says when Bambu has a newer version, or that the unit
+    already runs the newest.
+
+=== "Version"
+
+    ![The versions for an AMS 2 Pro: 05.00.22.22, the newest, and 04.00.21.87, installed](../assets/images/bridgebox/flash-ams-versions.webp){ width="520" loading=lazy }
+
+    The newest two from Bambu for that model, and any image you put beside the updater on the printer. The one the
+    unit runs is marked Installed.
+
+=== "Confirm"
+
+    ![The confirm sheet: Bambu AMS 1 runs 04.00.21.87, this writes 05.00.22.22](../assets/images/bridgebox/flash-ams-confirm.webp){ width="520" loading=lazy }
+
+    **Flash** writes it, in a few minutes. The units on that BridgeBox read offline until it is done, and Klipper
+    keeps running. While a print runs, the button stays off.
+
+=== "Done"
+
+    ![The result: Bambu_AMS_1 now runs 05.00.22.22, was 04.00.21.87](../assets/images/bridgebox/flash-ams-done.webp){ width="520" loading=lazy }
+
+    The sheet says how it went. Leaving it during an update is fine: an **Updating** row at the top of the list goes
+    back to it.
+
+=== "Finish"
+
+    ![A Finish row above the units, for a unit that waits in its bootloader](../assets/images/bridgebox/flash-ams-finish.webp){ width="520" loading=lazy }
+
+    If an update stops partway, the unit waits in its bootloader. Keep it powered, open Flash AMS again and tap the
+    **Finish** row.
+
+The panel's update page has the same on its **AMS** card: pick the unit and the version, then press **Flash AMS**.
 
 ## What can go wrong
 

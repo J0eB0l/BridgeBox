@@ -180,6 +180,8 @@
   @media (min-width:620px){.caps{grid-template-columns:1fr 1fr}}
   @media (min-width:980px){.caps{grid-template-columns:repeat(3,1fr)}}
   .cap{background:var(--surface);padding:1.35rem 1.4rem;display:flex;flex-direction:column;gap:.5rem}
+  .cap-wide{grid-column:1/-1}
+  .cap-wide p{max-width:72ch}
   .cap-k{
     font-family:var(--mono);font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;
     color:var(--muted);display:flex;align-items:center;gap:.5rem;
@@ -478,6 +480,12 @@
           <p>A single BridgeBox supports up to four AMS 1/AMS 2 Pro units plus eight AMS HT units, for a total of 24 filament slots. This limit comes from the AMS bus addressing system.</p>
           <p>You can add another BridgeBox if you need more slots. AFC keeps the units and tool assignments separate.</p>
         </div>
+        <div class="cap cap-wide">
+          <p class="cap-k"><span class="chip" style="background:var(--muted)"></span>AMS firmware</p>
+          <h3>AMS firmware updates</h3>
+          <p>Update an AMS 2 Pro or AMS HT to Bambu's own firmware from your printer's web interface or the touchscreen display, with no Bambu printer. Pick the unit, then one of the two newest versions for its model. BridgeBox downloads the image from Bambu, or uses one you saved beside the updater if the printer has no internet. Klipper keeps running, and the other units stay connected.</p>
+          <p>When BridgeBox first sees a unit on older firmware, it offers the newest version. Choose Not now and it won't ask about that unit again.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -509,6 +517,7 @@
             <tr><th>Jam handling</th><td>AFC detects and handles failed loads</td><td>AFC detects and handles failed loads</td><td>AFC detects and handles failed loads</td><td>AMS Lite stall reporting and AFC handling</td></tr>
             <tr><th>Filament grip / clogs</th><td>Printer/AFC sensor configuration</td><td>Printer/AFC sensor configuration</td><td>Printer/AFC sensor configuration</td><td>Odometer checks movement and can trigger AFC pause</td></tr>
             <tr><th>Stuck spool</th><td>AMS errors handled by AFC</td><td>AMS errors handled by AFC</td><td>AMS errors handled by AFC</td><td>AMS Lite reports stuck/tangled spool</td></tr>
+            <tr><th>Firmware updates</th><td>In the menu; not tested yet</td><td>Bambu's firmware, from the printer or the display</td><td>Bambu's firmware, from the printer or the display</td><td>Not through BridgeBox</td></tr>
           </tbody>
         </table>
       </div>
@@ -676,10 +685,11 @@
           <p><strong>Not only the AMS.</strong> Tick <em>All AFC units</em> in that list and every other unit AFC runs joins it: Box Turtle, Night Owl, Quattro Box, EMU, HTLF, ViViD, Claymore, ACE, ACE 2, OpenAMS, a toolchanger's tools. Each gets the same card, with its lanes, spools and weights, the box temperature and humidity when it reports them, and its buffer when it has one. A lane with an AFC RFID reader, on an ACE 2, an OpenAMS, a ViViD or a Box Turtle, gets Scan Tag too, which reads the tag where the spool sits and fills in the lane. A unit with more than four lanes pages through them four at a time.</p>
           <p>Every bay tile shows the filament, how full the spool is, its print temperatures and Spoolman spool. Its T# / Runout button sets the tool number and the infinite-runout lane from any lane on the printer, and Scan Tag reads the spool's tag. Tap the spool itself to load, unload or eject it, or reset the lane. It dims itself when it has been left alone, and a tap brings it straight back.</p>
           <p><strong>Heater control on the units that have one.</strong> An AMS 2 Pro, an AMS HT, an Anycubic ACE and an ACE 2 each get a Dryer Menu on their card: pick a temperature and a time, start or stop a cycle, and the card shows it drying and at what temperature. It sends the same commands as AFC's own dryer page and offers only what each unit accepts: up to 65&nbsp;°C on an AMS 2 Pro, 85&nbsp;°C on an HT, the ACE's configured ceiling, and spool rotation where the AMS supports it. Units without a heater show their temperature and humidity only.</p>
+          <p><strong>AMS firmware from the panel.</strong> Settings &gt; Flash AMS lists each AMS unit with the firmware it runs and whether Bambu has a newer one. Pick a unit and a version, confirm, and the printer's AMS updater writes it while Klipper keeps running. The panel's own update page has the same on its AMS card.</p>
           <p>The touchscreen connects over Wi-Fi and doesn't control the filament bus directly. Disconnecting the display won't interrupt a print.</p>
         </div>
         <figure>
-          <svg viewBox="0 0 860 2280" role="img" aria-label="Four screens from the BridgeBox touchscreen. First, the home screen: a status bar with the BridgeBox name, the bridge firmware version, Online, a Unit button reading AMS 1, a settings cog and Log out, and below it one AMS 2 Pro card with humidity, chamber temperature, status, a buffer gauge and a Dryer Menu button, beside four bay tiles. Each tile shows its tool number and lane, a ring in the spool's color showing how full it is, the filament, weight, temperatures, a Spool ID button, a T# / Runout button and a Scan Tag button; the third is marked In tool. Second, the Units list with All AFC units ticked: an AMS 2 Pro, an AMS HT, a Box Turtle, an ACE 2 drying at 50 C and an OpenAMS, each row with a chip per lane in its spool color. Third, the AMS HT card: one lane of PA6-CF and its dryer controls beside it, temperatures from 50 to 85 C and times from 2 to 12 hours, with Start and Stop. Fourth, the popup a tapped spool opens, with Load, Unload, Eject and Reset lane.">
+          <svg viewBox="0 0 860 2860" role="img" aria-label="Five screens from the BridgeBox touchscreen. First, the home screen: a status bar with the BridgeBox name, the bridge firmware version, Online, a Unit button reading AMS 1, a settings cog and Log out, and below it one AMS 2 Pro card with humidity, chamber temperature, status, a buffer gauge and a Dryer Menu button, beside four bay tiles. Each tile shows its tool number and lane, a ring in the spool's color showing how full it is, the filament, weight, temperatures, a Spool ID button, a T# / Runout button and a Scan Tag button; the third is marked In tool. Second, the Units list with All AFC units ticked: an AMS 2 Pro, an AMS HT, a Box Turtle, an ACE 2 drying at 50 C and an OpenAMS, each row with a chip per lane in its spool color. Third, the AMS HT card: one lane of PA6-CF and its dryer controls beside it, temperatures from 50 to 85 C and times from 2 to 12 hours, with Start and Stop. Fourth, the popup a tapped spool opens, with Load, Unload, Eject and Reset lane. Fifth, the Flash AMS list from Settings: three units, each with its model and firmware, the first marked 05.00.22.22 is out.">
             <g transform="translate(0,0) scale(1)">
               <rect x="0" y="0" width="860" height="540" rx="16" fill="#1b1f23"></rect>
               <clipPath id="scr1"><rect x="30" y="30" width="800" height="480" rx="4"></rect></clipPath>
@@ -700,8 +710,13 @@
               <clipPath id="scr4"><rect x="30" y="30" width="800" height="480" rx="4"></rect></clipPath>
               <image x="30" y="30" width="800" height="480" clip-path="url(#scr4)" href="assets/panel-popup-156.webp"></image>
             </g>
+            <g transform="translate(0,2320) scale(1)">
+              <rect x="0" y="0" width="860" height="540" rx="16" fill="#1b1f23"></rect>
+              <clipPath id="scr5"><rect x="30" y="30" width="800" height="480" rx="4"></rect></clipPath>
+              <image x="30" y="30" width="800" height="480" clip-path="url(#scr5)" href="assets/panel-flashams-159.webp"></image>
+            </g>
           </svg>
-          <figcaption>The panel's own screens, rendered from its firmware. One unit fills the screen at a time; the Unit button opens a list of every unit on the bridge, and with All AFC units ticked, every other AFC unit on the printer too, like the ACE 2. Units with a heater show their dryer controls, as on the AMS HT. Tap a spool for Load, Unload, Eject and Reset lane.</figcaption>
+          <figcaption>The panel's own screens, rendered from its firmware. One unit fills the screen at a time; the Unit button opens a list of every unit on the bridge, and with All AFC units ticked, every other AFC unit on the printer too, like the ACE 2. Units with a heater show their dryer controls, as on the AMS HT. Tap a spool for Load, Unload, Eject and Reset lane. Settings &gt; Flash AMS shows each AMS unit's firmware and offers Bambu's newer one.</figcaption>
         </figure>
       </div>
     </div>

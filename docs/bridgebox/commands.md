@@ -209,6 +209,25 @@ writing; `ABORT=1` clears a stuck transfer. `UNIT` picks the BridgeBox through a
 AFC_BAMBU_FLASH UNIT=Bambu_AMS_1 FILE=signed_s3.bin APPLY=0
 ```
 
+### AFC_BAMBU_FIRMWARE
+
+Updates an AMS unit's own firmware. On its own it opens the Flash AMS menu: the units, then the versions for the one
+picked, then a page to confirm. `CONFIRM=1` with `UNIT` and `VERSION` starts the update directly, and `FILE` names an
+image in the updater's folder. `RESUME=1` finishes an update that stopped partway.
+
+```
+AFC_BAMBU_FIRMWARE
+AFC_BAMBU_FIRMWARE UNIT=Bambu_AMS_1 VERSION=05.00.22.22 CONFIRM=1
+```
+
+### AFC_BAMBU_VERSION
+
+Asks a unit over the bus for its firmware version and model, and prints them.
+
+```
+AFC_BAMBU_VERSION UNIT=Bambu_AMS_1
+```
+
 -----
 
 ## Advanced
