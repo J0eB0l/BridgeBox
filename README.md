@@ -77,7 +77,7 @@ You can add another BridgeBox if you need more slots. AFC keeps the units and to
 
 ### AMS firmware updates
 
-Update an AMS 1, AMS 2 Pro or AMS HT to Bambu's own firmware from your printer's web interface or the touchscreen display, with no Bambu printer. Pick the unit, then one of the two newest versions for its model. BridgeBox downloads the image from Bambu, or uses one you saved beside the updater if the printer has no internet. Klipper keeps running, and only the units on that BridgeBox read offline until it is done.
+Update an AMS 1, AMS 2 Pro or AMS HT to Bambu's own firmware from your printer's web interface or the touchscreen display, with no Bambu printer. Pick the unit, then one of the two newest versions for its model. The printer downloads the image directly from Bambu's servers, or uses one you saved beside the updater if it has no internet: BridgeBox itself hosts no Bambu firmware. Klipper keeps running, and only the units on that BridgeBox read offline until it is done.
 
 When BridgeBox first sees a unit on older firmware, it offers the newest version. Choose Not now and it won't ask about that unit again.
 

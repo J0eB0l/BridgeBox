@@ -88,6 +88,13 @@ one keeps running until the new one has been checked.
 Each AMS unit's own firmware is updated through the BridgeBox too: no Bambu printer and no cable to the AMS. You pick
 the unit and the version from a menu, the image comes straight from Bambu, and Klipper keeps running.
 
+!!! note "Where the firmware comes from"
+
+    BridgeBox doesn't host, bundle or redistribute any Bambu Lab firmware. The updater only carries a list of the
+    versions Bambu Lab has published and the addresses Bambu Lab serves them from. When you start an update, your
+    printer downloads the image directly from Bambu Lab's servers and checks it against that list before writing it
+    to the AMS. An image you download from Bambu Lab yourself and save beside the updater is checked the same way.
+
 Why update: an AMS 2 Pro only loads a tray while its dryer runs once it has Bambu's newer AMS firmware, and an AMS HT on
 05.00.22.19 keeps heating while printing with a lane loaded.
 
