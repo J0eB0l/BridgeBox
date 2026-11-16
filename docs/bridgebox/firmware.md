@@ -110,9 +110,9 @@ Open the menu one of three ways:
 1. **Pick the unit.** Each one shows the firmware it runs and whether a newer one is out.
 2. **Pick the version.** The menu lists the newest two from Bambu for that model, and any image you put in the
    folder yourself.
-3. **Confirm.** The update takes a few minutes. The units on that BridgeBox read offline until it is done, and the
-   printer's other units stay connected. A popup then says how it went, and the unit comes back online on its new
-   firmware.
+3. **Confirm.** The update takes a few minutes. The units on that BridgeBox read offline until it is done; the
+   other units can stay connected. At the end a popup says how it went, for example
+   `Bambu_AMS_1 now runs 05.00.22.22 (was 04.00.21.87).`, and the unit comes back online on its new firmware.
 
 It refuses while a print is running or paused, and while a unit on the same BridgeBox is drying. The whole run is
 logged in `~/printer_data/logs/ams_flash.log`. Without the menu:
