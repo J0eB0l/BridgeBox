@@ -1,4 +1,4 @@
-<p align="center"><img alt="BridgeBox, powered by AFC. Use your Bambu AMS with Klipper. The closed BridgeBox case beside its board." src="assets/readme/hero-dark-led.webp" width="100%"></p>
+<p align="center"><img alt="BridgeBox, powered by AFC. Use your Bambu AMS with Klipper. The closed BridgeBox case beside its board." src="assets/readme/hero-dark-2026-11-19.webp" width="100%"></p>
 
 # BridgeBox
 

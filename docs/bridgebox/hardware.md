@@ -1,7 +1,7 @@
 # Hardware and Wiring
 
 <figure markdown="span">
-  ![The BridgeBox in its case](../assets/images/bridgebox/case-2026-11.webp){ width="420" loading=lazy }
+  ![The BridgeBox in its case](../assets/images/bridgebox/case-photo-2026-11.webp){ width="420" loading=lazy }
 </figure>
 
 ## Connecting the AMS
